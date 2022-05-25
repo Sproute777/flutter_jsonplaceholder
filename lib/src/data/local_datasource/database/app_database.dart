@@ -7,16 +7,7 @@ import '../tables/tables.dart';
 part 'app_database.g.dart';
 
 @DriftDatabase(
-  tables: const [
-    Users,
-    Addresses,
-    Companies,
-    Todos,
-    Albums,
-    Posts,
-    Photos,
-    Comments
-  ],
+  tables: [Users, Addresses, Companies, Todos, Albums, Posts, Photos, Comments],
   daos: const [UsersDao, TodosDao],
   // include: {'query.drift'}
   // queries: {

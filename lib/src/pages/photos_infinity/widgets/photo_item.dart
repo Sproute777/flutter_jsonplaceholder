@@ -20,9 +20,7 @@ class PhotoItem extends StatelessWidget {
               children: <Widget>[
                 Align(
                   alignment: Alignment.topCenter,
-                  child: Container(
-                    child: Image.network(photo.url, fit: BoxFit.cover),
-                  ),
+                  child: Image.network(photo.url, fit: BoxFit.cover),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -31,11 +29,11 @@ class PhotoItem extends StatelessWidget {
                     verticalDirection: VerticalDirection.up,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         color: Colors.black.withOpacity(.2),
                         child: Text(
                           photo.title ?? '',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.normal),

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => HomePage());
+    return MaterialPageRoute<void>(builder: (_) => const HomePage());
   }
 
   const HomePage({Key? key}) : super(key: key);
@@ -23,11 +23,11 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
+            const Text(
               'Jsonplaceholder examples',
               style: TextStyle(fontSize: 30, color: Colors.white),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             SizedBox(
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Text('Infinity photos'),
+                child: const Text('Infinity photos'),
                 onPressed: () {
                   Navigator.of(context).pushAndRemoveUntil<void>(
                     PhotoInfinityPage.route(),

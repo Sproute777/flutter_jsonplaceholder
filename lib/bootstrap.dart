@@ -6,8 +6,6 @@ import 'src/app.dart';
 import 'src/data/local_datasource/local_datasource.dart';
 import 'package:flutter/widgets.dart';
 
-// import 'src/app.dart';
-
 import 'src/data/todos_repository.dart';
 
 void bootstrap({required UsersDao todosApi}) {

@@ -18,10 +18,10 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 }
 
 class PhotosBloc extends Bloc<PhotosEvent, PhotosState> {
-  JsonplaceholderApiClient _apiClient;
+  final JsonplaceholderApiClient _apiClient;
   PhotosBloc(JsonplaceholderApiClient apiClient)
       : _apiClient = apiClient,
-        super(PhotosState()) {
+        super(const PhotosState()) {
     on<PhotosFetched>(_onPhotosFetched,
         transformer: throttleDroppable(throttleDuration));
   }

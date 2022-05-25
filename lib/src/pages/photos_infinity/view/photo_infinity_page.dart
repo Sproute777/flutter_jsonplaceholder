@@ -8,7 +8,7 @@ import '../widgets/photo_loader.dart';
 
 class PhotoInfinityPage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => PhotoInfinityPage());
+    return MaterialPageRoute<void>(builder: (_) => const PhotoInfinityPage());
   }
 
   const PhotoInfinityPage({Key? key}) : super(key: key);
@@ -18,13 +18,13 @@ class PhotoInfinityPage extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           PhotosBloc(JsonplaceholderApiClient())..add(PhotosFetched()),
-      child: _PhotoInfinityView(),
+      child: const _PhotoInfinityView(),
     );
   }
 }
 
 class _PhotoInfinityView extends StatefulWidget {
-  _PhotoInfinityView({Key? key}) : super(key: key);
+  const _PhotoInfinityView({Key? key}) : super(key: key);
 
   @override
   State<_PhotoInfinityView> createState() => __PhotoInfinityViewState();
@@ -61,7 +61,7 @@ class __PhotoInfinityViewState extends State<_PhotoInfinityView> {
                   : state.photos.length + 3,
               controller: _scrollController,
               itemBuilder: (context, index) => index >= state.photos.length
-                  ? BottomLoader()
+                  ? const BottomLoader()
                   : PhotoItem(
                       photo: state.photos[index],
                       onTap: () => setState(() =>
@@ -69,7 +69,7 @@ class __PhotoInfinityViewState extends State<_PhotoInfinityView> {
                               ? _expandedIndices.remove(index)
                               : _expandedIndices.add(index)),
                     ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 mainAxisSpacing: 16.0,
                 crossAxisSpacing: 16.0,

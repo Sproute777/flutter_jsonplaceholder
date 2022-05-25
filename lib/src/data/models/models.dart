@@ -16,3 +16,5 @@ export '../local_datasource/database/app_database.dart'
         TodosCompanion,
         Comment,
         CommentsCompanion;
+
+export 'profile_user.dart';

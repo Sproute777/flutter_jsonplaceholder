@@ -101,7 +101,7 @@ class _ProfileViewState extends State<_ProfileView> {
             return false;
           },
           child: CustomScrollView(
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             slivers: <Widget>[
               SliverAppBar(
                 expandedHeight: expandedHeader,
@@ -111,7 +111,7 @@ class _ProfileViewState extends State<_ProfileView> {
                     : AnimatedContainer(
                         height: 200,
                         width: 100,
-                        duration: Duration(seconds: 2),
+                        duration: const Duration(seconds: 2),
                         child: Transform(
                           transform: Matrix4.identity()..translate(30.0, 0.0),
                           child: ProfileImage(radius: radius),
@@ -138,7 +138,7 @@ class _ProfileViewState extends State<_ProfileView> {
                   decoration: BoxDecoration(
                       color: isExpanded ? Colors.transparent : Colors.blue[800],
                       image: isExpanded
-                          ? DecorationImage(
+                          ? const DecorationImage(
                               fit: BoxFit.fitWidth,
                               alignment: Alignment.bottomCenter,
                               image: AssetImage(
@@ -154,7 +154,7 @@ class _ProfileViewState extends State<_ProfileView> {
                               ..translate(0.0, maxRadius),
                             child: ProfileImage(radius: radius),
                           ))
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ),
               ),
               SliverToBoxAdapter(
@@ -205,7 +205,7 @@ class ProfileImage extends StatelessWidget {
           padding: const EdgeInsets.all(2.0),
           child: CircleAvatar(
             radius: radius,
-            backgroundImage: AssetImage(
+            backgroundImage: const AssetImage(
               'assets/images/bordeaux-mastif.jpg',
             ),
           ),
@@ -215,11 +215,10 @@ class ProfileImage extends StatelessWidget {
   }
 }
 
-//=================
-//  Profile Info
-//================
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({required this.user, this.company, this.address});
+  const ProfileHeader(
+      {Key? key, required this.user, this.company, this.address})
+      : super(key: key);
   final User user;
   final Address? address;
   final Company? company;
@@ -231,17 +230,17 @@ class ProfileHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 64,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 32.0),
+                  padding: EdgeInsets.only(top: 8.0, left: 32.0),
                   child: Text("Bio",
                       style: TextStyle(
                           fontSize: 24,
@@ -254,24 +253,24 @@ class ProfileHeader extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _row(title: 'username', text: user.username),
-                        SizedBox(
+                        _Row(title: 'username', text: user.username),
+                        const SizedBox(
                           height: 16.0,
                         ),
-                        _row(title: 'name', text: user.name ?? ''),
-                        SizedBox(
+                        _Row(title: 'name', text: user.name ?? ''),
+                        const SizedBox(
                           height: 16.0,
                         ),
-                        _row(title: 'email', text: user.email ?? ''),
-                        SizedBox(
+                        _Row(title: 'email', text: user.email ?? ''),
+                        const SizedBox(
                           height: 16.0,
                         ),
-                        _row(title: 'phone', text: user.phone ?? ''),
-                        SizedBox(
+                        _Row(title: 'phone', text: user.phone ?? ''),
+                        const SizedBox(
                           height: 16.0,
                         ),
-                        _row(title: 'website', text: user.website ?? ''),
-                        SizedBox(
+                        _Row(title: 'website', text: user.website ?? ''),
+                        const SizedBox(
                           height: 16.0,
                         ),
                       ])),
@@ -282,10 +281,10 @@ class ProfileHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 32.0),
+                    padding: EdgeInsets.only(top: 8.0, left: 32.0),
                     child: Text("Address",
                         style: TextStyle(
                             fontSize: 24,
@@ -298,38 +297,38 @@ class ProfileHeader extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 200,
                         child: Divider(
                           color: Colors.white30,
                         ),
                       ),
-                      _row(title: 'street', text: address!.street ?? ''),
-                      SizedBox(
+                      _Row(title: 'street', text: address!.street ?? ''),
+                      const SizedBox(
                         height: 16.0,
                       ),
-                      _row(title: 'suite', text: address!.suite ?? ''),
-                      SizedBox(
+                      _Row(title: 'suite', text: address!.suite ?? ''),
+                      const SizedBox(
                         height: 16.0,
                       ),
-                      _row(title: 'zip-code', text: address!.zipcode ?? ''),
-                      SizedBox(
+                      _Row(title: 'zip-code', text: address!.zipcode ?? ''),
+                      const SizedBox(
                         height: 16.0,
                       ),
                       Row(
                         children: [
                           SizedBox(
                               width: 100,
-                              child: _row(
+                              child: _Row(
                                   title: 'latitude', text: address!.lat ?? '')),
                           SizedBox(
                               width: 100,
-                              child: _row(
+                              child: _Row(
                                   title: 'longitude',
                                   text: address!.lng ?? '')),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16.0,
                       ),
                     ],
@@ -343,10 +342,10 @@ class ProfileHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 32.0),
+                    padding: EdgeInsets.only(top: 8.0, left: 32.0),
                     child: Text("Company",
                         style: TextStyle(
                             fontSize: 24,
@@ -359,24 +358,24 @@ class ProfileHeader extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 200,
                         child: Divider(
                           color: Colors.white30,
                         ),
                       ),
-                      _row(title: 'company-name', text: company!.name ?? ''),
-                      SizedBox(
+                      _Row(title: 'company-name', text: company!.name ?? ''),
+                      const SizedBox(
                         height: 16.0,
                       ),
-                      _row(
+                      _Row(
                           title: 'catch-phrase',
                           text: company!.catchPhrase ?? ''),
-                      SizedBox(
+                      const SizedBox(
                         height: 16.0,
                       ),
-                      _row(title: 'bs', text: company!.bs ?? ''),
-                      SizedBox(
+                      _Row(title: 'bs', text: company!.bs ?? ''),
+                      const SizedBox(
                         height: 16.0,
                       ),
                     ],
@@ -389,8 +388,20 @@ class ProfileHeader extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _row({required String title, required String text}) {
+class _Row extends StatelessWidget {
+  const _Row({
+    Key? key,
+    required this.title,
+    required this.text,
+  }) : super(key: key);
+
+  final String title;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -398,14 +409,14 @@ class ProfileHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(title,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white54,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400)),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
                   fontWeight: FontWeight.w400),
@@ -417,25 +428,22 @@ class ProfileHeader extends StatelessWidget {
   }
 }
 
-// =================
-//  Profile Body
-// =================
 class _SpaceBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var delegate = new SliverGridDelegateWithFixedCrossAxisCount(
+    var delegate = const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 3,
       crossAxisSpacing: 8.0,
       mainAxisSpacing: 8.0,
     );
 
-    return new GridView(
-      physics: NeverScrollableScrollPhysics(),
+    return GridView(
+      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.only(top: 16.0),
       shrinkWrap: true,
       gridDelegate: delegate,
       children: <Widget>[
-        ...List.generate(15, (intex) => ImageBox()),
+        ...List.generate(15, (intex) => const ImageBox()),
       ],
     );
   }
@@ -454,10 +462,8 @@ class ImageBox extends StatelessWidget {
         child: InkWell(
           onTap: () => onTap,
           child: Stack(children: <Widget>[
-            Container(
-              child: Image.asset('assets/images/bordeaux-mastif.jpg',
-                  fit: BoxFit.fitHeight),
-            )
+            Image.asset('assets/images/bordeaux-mastif.jpg',
+                fit: BoxFit.fitHeight)
           ]),
         ),
       ),
