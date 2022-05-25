@@ -27,10 +27,10 @@ class _PhotoInfinityView extends StatefulWidget {
   const _PhotoInfinityView({Key? key}) : super(key: key);
 
   @override
-  State<_PhotoInfinityView> createState() => __PhotoInfinityViewState();
+  State<_PhotoInfinityView> createState() => _PhotoInfinityViewState();
 }
 
-class __PhotoInfinityViewState extends State<_PhotoInfinityView> {
+class _PhotoInfinityViewState extends State<_PhotoInfinityView> {
   final _scrollController = ScrollController();
   late final double _screenHeight;
   final _expandedIndices = <int>{};

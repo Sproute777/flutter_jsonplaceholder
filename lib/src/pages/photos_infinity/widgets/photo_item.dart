@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/models.dart';
@@ -20,7 +21,8 @@ class PhotoItem extends StatelessWidget {
               children: <Widget>[
                 Align(
                   alignment: Alignment.topCenter,
-                  child: Image.network(photo.url, fit: BoxFit.cover),
+                  child: CachedNetworkImage(
+                      imageUrl: photo.url, fit: BoxFit.cover),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
