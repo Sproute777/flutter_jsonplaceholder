@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_jsonplaceholder/src/data/remote_datasource/jsonplaceholder_api_client.dart';
+import 'package:flutter_jsonplaceholder/src/pages/profile/view/profile_page.dart';
 
 import '../cubit/allusers_cubit.dart';
 
@@ -50,47 +51,55 @@ class _AllusersView extends StatelessWidget {
             return ListView.builder(
                 itemCount: 10,
                 itemBuilder: ((context, index) {
-                  return Container(
-                    margin: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueAccent),
-                    ),
-                    child: Row(
-                      // mainAxisSize: MainAxisSize.min,
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Spacer(),
-                        const Expanded(
-                            child: CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/bordeaux-mastif.jpg'),
-                        )),
-                        const Spacer(),
-                        Expanded(
-                          flex: 8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                state.users[index].user.name ?? '',
-                                style: titleText,
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text(state.users[index].user.username,
-                                  style: supbtileText),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                            ],
+                  return InkWell(
+                    highlightColor: Colors.green[100],
+                    splashColor: Colors.green[200],
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(ProfilePage.route(state.users[index]));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.blue[100],
+                        border: Border.all(color: Colors.blueAccent),
+                      ),
+                      child: Row(
+                        children: [
+                          const Spacer(),
+                          const Expanded(
+                              child: CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/bordeaux-mastif.jpg'),
+                          )),
+                          const Spacer(),
+                          Expanded(
+                            flex: 8,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  state.users[index].user.name ?? '',
+                                  style: titleText,
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Text(state.users[index].user.username,
+                                    style: supbtileText),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Spacer(),
-                      ],
+                          const Spacer(),
+                        ],
+                      ),
                     ),
                   );
                 }));

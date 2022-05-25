@@ -2,40 +2,30 @@ import 'package:flutter/material.dart';
 import '../../../data/models/models.dart';
 
 class ProfilePage extends StatelessWidget {
-  static Route route(User user, Address? address, Company? company) {
+  static Route route(ProfileUser user) {
     return MaterialPageRoute<void>(
         builder: (_) => ProfilePage(
               user: user,
-              company: company,
-              address: address,
             ));
   }
 
-  const ProfilePage({Key? key, required this.user, this.address, this.company})
-      : super(key: key);
-  final User user;
-  final Address? address;
-  final Company? company;
+  const ProfilePage({Key? key, required this.user}) : super(key: key);
+  final ProfileUser user;
 
   @override
   Widget build(BuildContext context) {
     return _ProfileView(
       user: user,
-      address: address,
-      company: company,
     );
   }
 }
 
 class _ProfileView extends StatefulWidget {
-  final User user;
-  final Address? address;
-  final Company? company;
+  final ProfileUser user;
+
   const _ProfileView({
     Key? key,
     required this.user,
-    this.address,
-    this.company,
   }) : super(key: key);
 
   @override
@@ -123,7 +113,7 @@ class _ProfileViewState extends State<_ProfileView> {
                     : Container(
                         padding: const EdgeInsets.only(left: 32.0, right: 64),
                         child: Text(
-                          widget.user.username,
+                          widget.user.user.username,
                           overflow: TextOverflow.fade,
                           maxLines: 1,
                           softWrap: false,
@@ -166,9 +156,8 @@ class _ProfileViewState extends State<_ProfileView> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       ProfileHeader(
-                          user: widget.user,
-                          address: widget.address,
-                          company: widget.company),
+                        profileUser: widget.user,
+                      ),
                     ],
                   ),
                 ),
@@ -216,12 +205,8 @@ class ProfileImage extends StatelessWidget {
 }
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader(
-      {Key? key, required this.user, this.company, this.address})
-      : super(key: key);
-  final User user;
-  final Address? address;
-  final Company? company;
+  final ProfileUser profileUser;
+  const ProfileHeader({Key? key, required this.profileUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -240,10 +225,10 @@ class ProfileHeader extends StatelessWidget {
               const Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 8.0, left: 32.0),
+                  padding: EdgeInsets.only(top: 16.0, left: 16.0),
                   child: Text("Bio",
                       style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           color: Colors.white60,
                           fontWeight: FontWeight.bold)),
                 ),
@@ -253,30 +238,35 @@ class ProfileHeader extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _Row(title: 'username', text: user.username),
+                        _Row(
+                            title: 'username', text: profileUser.user.username),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        _Row(title: 'name', text: user.name ?? ''),
+                        _Row(title: 'name', text: profileUser.user.name ?? ''),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        _Row(title: 'email', text: user.email ?? ''),
+                        _Row(
+                            title: 'email', text: profileUser.user.email ?? ''),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        _Row(title: 'phone', text: user.phone ?? ''),
+                        _Row(
+                            title: 'phone', text: profileUser.user.phone ?? ''),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        _Row(title: 'website', text: user.website ?? ''),
+                        _Row(
+                            title: 'website',
+                            text: profileUser.user.website ?? ''),
                         const SizedBox(
                           height: 16.0,
                         ),
                       ])),
             ],
           ),
-          if (address != null) ...[
+          if (profileUser.address != null) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -284,10 +274,10 @@ class ProfileHeader extends StatelessWidget {
                 const Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 8.0, left: 32.0),
+                    padding: EdgeInsets.only(top: 16.0, left: 16.0),
                     child: Text("Address",
                         style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 20,
                             color: Colors.white60,
                             fontWeight: FontWeight.bold)),
                   ),
@@ -303,15 +293,21 @@ class ProfileHeader extends StatelessWidget {
                           color: Colors.white30,
                         ),
                       ),
-                      _Row(title: 'street', text: address!.street ?? ''),
+                      _Row(
+                          title: 'street',
+                          text: profileUser.address!.street ?? ''),
                       const SizedBox(
                         height: 16.0,
                       ),
-                      _Row(title: 'suite', text: address!.suite ?? ''),
+                      _Row(
+                          title: 'suite',
+                          text: profileUser.address!.suite ?? ''),
                       const SizedBox(
                         height: 16.0,
                       ),
-                      _Row(title: 'zip-code', text: address!.zipcode ?? ''),
+                      _Row(
+                          title: 'zip-code',
+                          text: profileUser.address!.zipcode ?? ''),
                       const SizedBox(
                         height: 16.0,
                       ),
@@ -320,12 +316,13 @@ class ProfileHeader extends StatelessWidget {
                           SizedBox(
                               width: 100,
                               child: _Row(
-                                  title: 'latitude', text: address!.lat ?? '')),
+                                  title: 'latitude',
+                                  text: profileUser.address!.lat ?? '')),
                           SizedBox(
                               width: 100,
                               child: _Row(
                                   title: 'longitude',
-                                  text: address!.lng ?? '')),
+                                  text: profileUser.address!.lng ?? '')),
                         ],
                       ),
                       const SizedBox(
@@ -337,7 +334,7 @@ class ProfileHeader extends StatelessWidget {
               ],
             ),
           ],
-          if (company != null) ...[
+          if (profileUser.company != null) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -345,10 +342,10 @@ class ProfileHeader extends StatelessWidget {
                 const Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 8.0, left: 32.0),
+                    padding: EdgeInsets.only(top: 16.0, left: 16.0),
                     child: Text("Company",
                         style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 20,
                             color: Colors.white60,
                             fontWeight: FontWeight.bold)),
                   ),
@@ -364,17 +361,19 @@ class ProfileHeader extends StatelessWidget {
                           color: Colors.white30,
                         ),
                       ),
-                      _Row(title: 'company-name', text: company!.name ?? ''),
+                      _Row(
+                          title: 'company-name',
+                          text: profileUser.company!.name ?? ''),
                       const SizedBox(
                         height: 16.0,
                       ),
                       _Row(
                           title: 'catch-phrase',
-                          text: company!.catchPhrase ?? ''),
+                          text: profileUser.company!.catchPhrase ?? ''),
                       const SizedBox(
                         height: 16.0,
                       ),
-                      _Row(title: 'bs', text: company!.bs ?? ''),
+                      _Row(title: 'bs', text: profileUser.company!.bs ?? ''),
                       const SizedBox(
                         height: 16.0,
                       ),
