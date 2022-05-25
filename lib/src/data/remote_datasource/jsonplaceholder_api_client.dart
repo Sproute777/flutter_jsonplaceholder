@@ -21,9 +21,12 @@ class JsonplaceholderApiClient {
 
   final http.Client _httpClient;
 
-  Future<List<User>> fetchUsers() async {
-    final queryParams = <String, String>{};
-    final uri = Uri.https(baseUrl, users, queryParams);
+  Future<List<ProfileUser>> fetchUsers() async {
+    // final queryParams = <String, String>{};
+    final uri = Uri.https(
+      baseUrl, users,
+      // queryParams
+    );
     return _getUsers(uri);
   }
 
@@ -66,44 +69,47 @@ class JsonplaceholderApiClient {
   }
 
 // -----------------------------------------------------------------------------//
-  Future<List<User>> _getUsers(Uri uri) async {
-    http.Response response;
-
-    try {
-      response = await _httpClient.get(uri);
-    } on Exception {
-      throw HttpException();
-    }
+  Future<List<ProfileUser>> _getUsers(Uri uri) async {
+    http.Response response = await _httpClient
+        .get(uri)
+        .onError((error, stackTrace) => throw HttpException());
 
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
     }
-    List body;
 
+    List body;
     try {
       body = json.decode(response.body) as List;
-    } on Exception {
+    } catch (_) {
       throw JsonDecodeException();
     }
 
     try {
-      return body
-          .map((dynamic item) => User.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } on Exception {
+      return body.map((dynamic item) {
+        final user = User.fromJson(item as Map<String, dynamic>);
+        item['company']['userId'] = user.id;
+        item['address']['userId'] = user.id;
+        item['address']['lng'] = item['address']['geo']['lng'];
+        item['address']['lat'] = item['address']['geo']['lat'];
+
+        final company =
+            Company.fromJson(item['company'] as Map<String, dynamic>);
+        final address =
+            Address.fromJson(item['address'] as Map<String, dynamic>);
+
+        return ProfileUser(user: user, address: address, company: company);
+      }).toList();
+    } catch (_) {
       throw JsonDeserializationException();
     }
   }
 // -----------------------------------------------------------------------------//
 
   Future<List<Todo>> _getTodos(Uri uri) async {
-    http.Response response;
-
-    try {
-      response = await _httpClient.get(uri);
-    } on Exception {
-      throw HttpException();
-    }
+    http.Response response = await _httpClient
+        .get(uri)
+        .onError((error, stackTrace) => throw HttpException());
 
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
@@ -127,13 +133,9 @@ class JsonplaceholderApiClient {
 // -----------------------------------------------------------------------------//
 
   Future<List<Photo>> _getPhotos(Uri uri) async {
-    http.Response response;
-
-    try {
-      response = await _httpClient.get(uri);
-    } on Exception {
-      throw HttpException();
-    }
+    http.Response response = await _httpClient
+        .get(uri)
+        .onError((error, stackTrace) => throw HttpException());
 
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
@@ -157,13 +159,9 @@ class JsonplaceholderApiClient {
 // -----------------------------------------------------------------------------//
 
   Future<List<Album>> _getAlbums(Uri uri) async {
-    http.Response response;
-
-    try {
-      response = await _httpClient.get(uri);
-    } on Exception {
-      throw HttpException();
-    }
+    http.Response response = await _httpClient
+        .get(uri)
+        .onError((error, stackTrace) => throw HttpException());
 
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
@@ -187,13 +185,9 @@ class JsonplaceholderApiClient {
 // -----------------------------------------------------------------------------//
 
   Future<List<Post>> _getPosts(Uri uri) async {
-    http.Response response;
-
-    try {
-      response = await _httpClient.get(uri);
-    } on Exception {
-      throw HttpException();
-    }
+    http.Response response = await _httpClient
+        .get(uri)
+        .onError((error, stackTrace) => throw HttpException());
 
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
@@ -217,13 +211,9 @@ class JsonplaceholderApiClient {
 // -----------------------------------------------------------------------------//
 
   Future<List<Comment>> _getComments(Uri uri) async {
-    http.Response response;
-
-    try {
-      response = await _httpClient.get(uri);
-    } on Exception {
-      throw HttpException();
-    }
+    http.Response response = await _httpClient
+        .get(uri)
+        .onError((error, stackTrace) => throw HttpException());
 
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);

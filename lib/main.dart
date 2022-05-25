@@ -6,6 +6,7 @@ import 'package:flutter_jsonplaceholder/src/pages/photos_infinity/view/photo_inf
 import 'bootstrap.dart';
 
 import 'src/data/local_datasource/local_datasource.dart';
+import 'src/pages/allusers/view/allusers_page.dart';
 import 'src/pages/profile/view/profile_page.dart';
 
 Future<void> main() async {
@@ -17,7 +18,7 @@ Future<void> main() async {
   runApp(MaterialApp(
       scrollBehavior: const MaterialScrollBehavior()
           .copyWith(dragDevices: {PointerDeviceKind.mouse}),
-      home: const PhotoInfinityPage()));
+      home: const AllusersPage()));
   // home: ProfilePage(
   //     user: User(
   //         id: 4,
