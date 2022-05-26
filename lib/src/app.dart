@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'data/todos_repository.dart';
 import 'common/bloc_observer/home.dart';
+import 'features/allusers/view/allusers_page.dart';
 
 class AppView extends StatelessWidget {
   const AppView({Key? key, required this.todosRepository}) : super(key: key);
@@ -13,7 +16,7 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: todosRepository,
-      child: _AppView(),
+      child: const _AppView(),
     );
   }
 }
@@ -24,7 +27,9 @@ class _AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomePage(),
+      scrollBehavior: const MaterialScrollBehavior()
+          .copyWith(dragDevices: {PointerDeviceKind.mouse}),
+      home: const AllusersPage(),
     );
   }
 }
