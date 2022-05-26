@@ -1,13 +1,17 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_jsonplaceholder/src/pages/photos_infinity/view/photo_infinity_page.dart';
+import 'package:flutter_jsonplaceholder/src/features/photos_infinity/view/photo_infinity_page.dart';
+import 'package:flutter_jsonplaceholder/src/features/profile/view/profile_page.dart';
 
 import 'bootstrap.dart';
 
 import 'src/data/local_datasource/local_datasource.dart';
-import 'src/pages/allusers/view/allusers_page.dart';
-import 'src/pages/profile/view/profile_page.dart';
+import 'src/data/models/models.dart';
+import 'src/features/allusers/view/allusers_page.dart';
+import 'src/features/profile/view/profile_tabs_bar.dart';
+// import 'src/pages/allusers/view/allusers_page.dart';
+// import 'src/pages/profile_2/view/profile_page.dart';
 
 Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -19,27 +23,4 @@ Future<void> main() async {
       scrollBehavior: const MaterialScrollBehavior()
           .copyWith(dragDevices: {PointerDeviceKind.mouse}),
       home: const AllusersPage()));
-  // home: ProfilePage(
-  //     user: User(
-  //         id: 4,
-  //         name: 'Some name Alex',
-  //         username: 'other username Example',
-  //         email: 'example@mail.ru',
-  //         phone: '84405903940',
-  //         website: 'www.website.com'),
-  //     address: Address(
-  //         userId: 4,
-  //         street: 'street',
-  //         suite: 'suite',
-  //         city: 'city',
-  //         zipcode: '948540',
-  //         lat: '456',
-  //         lng: '455'),
-  //     company: Company(
-  //         userId: 4,
-  //         name: 'compnay name',
-  //         catchPhrase: 'catchPhrase',
-  //         bs: 'bs'))
-  //         )
-  // );
 }
