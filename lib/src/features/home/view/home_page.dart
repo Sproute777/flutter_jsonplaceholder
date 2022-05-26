@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../../../pages/photos_infinity/view/photo_infinity_page.dart';
+import '../../../features/photos_infinity/view/photo_infinity_page.dart';
 import 'package:flutter/material.dart';
 
 // void main() => runApp(MaterialApp(
@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                 child: const Text('Infinity photos'),
                 onPressed: () {
                   Navigator.of(context).pushAndRemoveUntil<void>(
-                    PhotoInfinityPage.route(),
+                    PhotoInfinityPage.route(1),
                     (route) => false,
                   );
                 },

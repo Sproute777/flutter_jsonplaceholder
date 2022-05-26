@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_jsonplaceholder/src/data/remote_datasource/jsonplaceholder_api_client.dart';
-import 'package:flutter_jsonplaceholder/src/pages/profile/view/profile_page.dart';
 
+import '../../profile/view/profile_tabs_bar.dart';
 import '../cubit/allusers_cubit.dart';
 
 class AllusersPage extends StatelessWidget {
@@ -56,7 +56,7 @@ class _AllusersView extends StatelessWidget {
                     splashColor: Colors.green[200],
                     onTap: () {
                       Navigator.of(context)
-                          .push(ProfilePage.route(state.users[index]));
+                          .push(ProfileTabBar.route(state.users[index]));
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(

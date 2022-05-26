@@ -38,8 +38,10 @@ class JsonplaceholderApiClient {
   }
 
   // 5000
-  Future<List<Photo>> fetchPhotos({int startIndex = 0, int limit = 20}) async {
+  Future<List<Photo>> fetchPhotos(int albumId,
+      {int startIndex = 0, int limit = 20}) async {
     final queryParams = <String, String>{
+      'albumId': '$albumId',
       '_start': '$startIndex',
       '_limit': '$limit'
     };
@@ -48,9 +50,11 @@ class JsonplaceholderApiClient {
   }
 
   // 100
-  Future<List<Album>> fetchAlbums() async {
-    // final queryParams = <String, String>{};
-    final uri = Uri.https(baseUrl, albums);
+  Future<List<Album>> fetchAlbums(int userId) async {
+    final queryParams = <String, String>{
+      'userId': '$userId',
+    };
+    final uri = Uri.https(baseUrl, albums, queryParams);
     return _getAlbums(uri);
   }
 

@@ -19,11 +19,9 @@ class AllusersCubit extends Cubit<AllusersState> {
       final profileUsers = await _apiClient.fetchUsers();
       emit(AllusersSuccess(profileUsers));
     } catch (e) {
-      if (e is HttpException) {
+      // on Exception catch(e) или on Object
+      if (e is HttpException || e is JsonDeserializationException) {
         emit(const AllusersFailure("something went wrong"));
-      }
-      if (e is JsonDeserializationException) {
-        emit(const AllusersFailure('json falure'));
       } else if (e is HttpRequestFailure) {
         emit(AllusersFailure('http status code ${e.statusCode.toString()}'));
       } else {

@@ -35,6 +35,8 @@ class PhotoItem extends StatelessWidget {
                         color: Colors.black.withOpacity(.2),
                         child: Text(
                           photo.title ?? '',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 14,

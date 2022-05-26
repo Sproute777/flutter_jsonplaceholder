@@ -19,7 +19,9 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 
 class PhotosBloc extends Bloc<PhotosEvent, PhotosState> {
   final JsonplaceholderApiClient _apiClient;
-  PhotosBloc(JsonplaceholderApiClient apiClient)
+  final int albumId;
+
+  PhotosBloc(this.albumId, JsonplaceholderApiClient apiClient)
       : _apiClient = apiClient,
         super(const PhotosState()) {
     on<PhotosFetched>(_onPhotosFetched,
@@ -33,7 +35,8 @@ class PhotosBloc extends Bloc<PhotosEvent, PhotosState> {
     if (state.hasReachedMax) return;
     try {
       if (state.status == PhotosStatus.initial) {
-        final photos = await _apiClient.fetchPhotos(startIndex: 0, limit: 20);
+        final photos =
+            await _apiClient.fetchPhotos(albumId, startIndex: 0, limit: 20);
 
         return emit(state.copyWith(
           status: PhotosStatus.success,
@@ -41,8 +44,8 @@ class PhotosBloc extends Bloc<PhotosEvent, PhotosState> {
           hasReachedMax: false,
         ));
       }
-      final photos =
-          await _apiClient.fetchPhotos(startIndex: state.photos.length);
+      final photos = await _apiClient.fetchPhotos(albumId,
+          startIndex: state.photos.length);
       photos.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(

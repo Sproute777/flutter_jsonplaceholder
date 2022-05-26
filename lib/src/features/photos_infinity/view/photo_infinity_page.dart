@@ -7,17 +7,19 @@ import '../widgets/photo_item.dart';
 import '../widgets/photo_loader.dart';
 
 class PhotoInfinityPage extends StatelessWidget {
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => const PhotoInfinityPage());
+  static Route route(int albumId) {
+    return MaterialPageRoute<void>(
+        builder: (_) => PhotoInfinityPage(albumId: albumId));
   }
 
-  const PhotoInfinityPage({Key? key}) : super(key: key);
+  const PhotoInfinityPage({Key? key, required this.albumId}) : super(key: key);
+  final int albumId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          PhotosBloc(JsonplaceholderApiClient())..add(PhotosFetched()),
+          PhotosBloc(albumId, JsonplaceholderApiClient())..add(PhotosFetched()),
       child: const _PhotoInfinityView(),
     );
   }

@@ -20,154 +20,19 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-class _ProfileView extends StatefulWidget {
+class _ProfileView extends StatelessWidget {
   final ProfileUser user;
-
-  const _ProfileView({
-    Key? key,
-    required this.user,
-  }) : super(key: key);
-
-  @override
-  _ProfileViewState createState() => _ProfileViewState();
-}
-
-class _ProfileViewState extends State<_ProfileView> {
-  static double maxRadius = 40.0;
-  static double minRadius = 8.0;
-  double radius = maxRadius;
-  double expandedHeader = 130.0;
-  double translate = -maxRadius;
-  bool isExpanded = true;
-  double offset = 0.0;
+  const _ProfileView({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.blueGrey[900],
-        body: NotificationListener<ScrollUpdateNotification>(
-          onNotification: (scrollNotification) {
-            final pixels = scrollNotification.metrics.pixels;
-
-            final scrollTabs = (scrollNotification.metrics.axisDirection ==
-                    AxisDirection.right ||
-                scrollNotification.metrics.axisDirection == AxisDirection.left);
-
-            if (!scrollTabs) {
-              if (expandedHeader - pixels <= kToolbarHeight) {
-                if (isExpanded) {
-                  translate = 0.0;
-                  setState(() {
-                    isExpanded = false;
-                  });
-                }
-              } else {
-                translate = -maxRadius + pixels;
-                if (translate > 0) {
-                  translate = 0.0;
-                }
-                if (!isExpanded) {
-                  setState(() {
-                    isExpanded = true;
-                  });
-                }
-              }
-
-              offset = pixels * 0.4;
-
-              final newSize = (maxRadius - offset);
-
-              setState(() {
-                if (newSize < minRadius) {
-                  radius = minRadius;
-                } else if (newSize > maxRadius) {
-                  radius = maxRadius;
-                } else {
-                  radius = newSize;
-                }
-              });
-            }
-            return false;
-          },
-          child: CustomScrollView(
-            physics: const ClampingScrollPhysics(),
-            slivers: <Widget>[
-              SliverAppBar(
-                expandedHeight: expandedHeader,
-                backgroundColor: Colors.grey,
-                leading: isExpanded
-                    ? null
-                    : AnimatedContainer(
-                        height: 200,
-                        width: 100,
-                        duration: const Duration(seconds: 2),
-                        child: Transform(
-                          transform: Matrix4.identity()..translate(30.0, 0.0),
-                          child: ProfileImage(radius: radius),
-                        ),
-                      ),
-
-                title: isExpanded
-                    ? null
-                    : Container(
-                        padding: const EdgeInsets.only(left: 32.0, right: 64),
-                        child: Text(
-                          widget.user.user.username,
-                          overflow: TextOverflow.fade,
-                          maxLines: 1,
-                          softWrap: false,
-                        ),
-                      ),
-
-                pinned: true,
-                elevation: 5.0,
-                forceElevated: true,
-                // actions: <Widget>[_buildProfileImage(radius)],
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                      color: isExpanded ? Colors.transparent : Colors.blue[800],
-                      image: isExpanded
-                          ? const DecorationImage(
-                              fit: BoxFit.fitWidth,
-                              alignment: Alignment.bottomCenter,
-                              image: AssetImage(
-                                'assets/images/abstract.jpg',
-                              ),
-                            )
-                          : null),
-                  child: isExpanded
-                      ? Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Transform(
-                            transform: Matrix4.identity()
-                              ..translate(0.0, maxRadius),
-                            child: ProfileImage(radius: radius),
-                          ))
-                      : const SizedBox.shrink(),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      ProfileHeader(
-                        profileUser: widget.user,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  return _SpaceBox();
-                }, childCount: 1),
-              ),
-            ],
+        body: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: _ProfileBody(
+            profileUser: user,
           ),
         ),
       ),
@@ -175,38 +40,9 @@ class _ProfileViewState extends State<_ProfileView> {
   }
 }
 
-class ProfileImage extends StatelessWidget {
-  const ProfileImage({Key? key, required this.radius}) : super(key: key);
-  final double radius;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey[800]!,
-              width: 2.0,
-            ),
-            shape: BoxShape.circle),
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: CircleAvatar(
-            radius: radius,
-            backgroundImage: const AssetImage(
-              'assets/images/bordeaux-mastif.jpg',
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ProfileHeader extends StatelessWidget {
+class _ProfileBody extends StatelessWidget {
   final ProfileUser profileUser;
-  const ProfileHeader({Key? key, required this.profileUser}) : super(key: key);
+  const _ProfileBody({Key? key, required this.profileUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +52,7 @@ class ProfileHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const SizedBox(
-            height: 64,
+            height: 16,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -423,49 +259,6 @@ class _Row extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class _SpaceBox extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var delegate = const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 3,
-      crossAxisSpacing: 8.0,
-      mainAxisSpacing: 8.0,
-    );
-
-    return GridView(
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(top: 16.0),
-      shrinkWrap: true,
-      gridDelegate: delegate,
-      children: <Widget>[
-        ...List.generate(15, (intex) => const ImageBox()),
-      ],
-    );
-  }
-}
-
-class ImageBox extends StatelessWidget {
-  final VoidCallback? onTap;
-  const ImageBox({Key? key, this.onTap}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Card(
-        elevation: 5,
-        child: InkWell(
-          onTap: () => onTap,
-          child: Stack(children: <Widget>[
-            Image.asset('assets/images/bordeaux-mastif.jpg',
-                fit: BoxFit.fitHeight)
-          ]),
-        ),
-      ),
     );
   }
 }
