@@ -1,4 +1,5 @@
-import '../../../data/remote_datasource/jsonplaceholder_api_client.dart';
+import '../../../common/remote_datasource/jsonplaceholder_api_client.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/remote_datasource/jsonplaceholder_api_client.dart';
+import '../remote_datasource/jsonplaceholder_api_client.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

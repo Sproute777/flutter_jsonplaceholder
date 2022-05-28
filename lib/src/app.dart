@@ -3,9 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'common/route/app_routes.dart';
 import 'data/todos_repository.dart';
-import 'common/bloc_observer/home.dart';
-import 'features/allusers/view/allusers_page.dart';
 
 class AppView extends StatelessWidget {
   const AppView({Key? key, required this.todosRepository}) : super(key: key);
@@ -26,10 +25,12 @@ class _AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       scrollBehavior: const MaterialScrollBehavior()
           .copyWith(dragDevices: {PointerDeviceKind.mouse}),
-      home: const AllusersPage(),
+      routeInformationParser: appRouter().routeInformationParser,
+      routerDelegate: appRouter().routerDelegate,
+      // home: const AllusersPage(),
     );
   }
 }

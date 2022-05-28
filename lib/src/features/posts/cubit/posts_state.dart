@@ -1,0 +1,19 @@
+part of 'posts_cubit.dart';
+
+enum PostsStatus { initial, loading, error, success }
+
+class PostsState extends Equatable {
+  const PostsState._(
+      {this.posts = const <Post>[], this.status = PostsStatus.initial});
+  final List<Post> posts;
+  final PostsStatus status;
+
+  const PostsState.initial() : this._();
+  const PostsState.loading() : this._(status: PostsStatus.loading);
+  const PostsState.error() : this._(status: PostsStatus.error);
+  const PostsState.success(List<Post> posts)
+      : this._(posts: posts, status: PostsStatus.success);
+
+  @override
+  List<Object> get props => [posts, status];
+}
