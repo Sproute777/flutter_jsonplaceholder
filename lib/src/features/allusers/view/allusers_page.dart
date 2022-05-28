@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_jsonplaceholder/src/data/remote_datasource/jsonplaceholder_api_client.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../profile/view/profile_tabs_bar.dart';
 import '../cubit/allusers_cubit.dart';
+import '../data/allusers_api_client.dart';
 
 class AllusersPage extends StatelessWidget {
-  static route() => MaterialPageRoute(builder: (_) => const AllusersPage());
   const AllusersPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) =>
-            AllusersCubit(JsonplaceholderApiClient())..fetchUsers(),
+        create: (context) => AllusersCubit(AllusersApiClient())..fetchUsers(),
         child: const _AllusersView());
   }
 }
@@ -55,8 +53,9 @@ class _AllusersView extends StatelessWidget {
                     highlightColor: Colors.green[100],
                     splashColor: Colors.green[200],
                     onTap: () {
-                      Navigator.of(context)
-                          .push(ProfileTabBar.route(state.users[index]));
+                      context.go('/tab-bar', extra: <String, Object>{
+                        'profileUser': state.users[index]
+                      });
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(

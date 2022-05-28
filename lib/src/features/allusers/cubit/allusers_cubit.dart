@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_jsonplaceholder/src/data/remote_datasource/jsonplaceholder_api_client.dart';
 
+import '../../../common/remote_datasource/jsonplaceholder_api_client.dart';
 import '../../../data/models/models.dart';
+import '../data/allusers_api_client.dart';
 
 part 'allusers_state.dart';
 
 class AllusersCubit extends Cubit<AllusersState> {
-  final JsonplaceholderApiClient _apiClient;
-  AllusersCubit(JsonplaceholderApiClient apiClient)
+  final AllusersApiClient _apiClient;
+  AllusersCubit(AllusersApiClient apiClient)
       : _apiClient = apiClient,
         super(AllusersInitial());
 
