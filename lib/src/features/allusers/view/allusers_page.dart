@@ -53,7 +53,7 @@ class _AllusersView extends StatelessWidget {
                     highlightColor: Colors.green[100],
                     splashColor: Colors.green[200],
                     onTap: () {
-                      context.go('/tab-bar', extra: <String, Object>{
+                      context.go('/profile/albums', extra: <String, Object>{
                         'profileUser': state.users[index]
                       });
                     },
