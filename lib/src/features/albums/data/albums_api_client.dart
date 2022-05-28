@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../../../common/models/models.dart';
 import '../../../common/remote_datasource/endpoints.dart';
 import '../../../common/utils/http_errors.dart';
-import '../../../data/models/models.dart';
 
 class AlbumsApiClient {
   AlbumsApiClient({http.Client? httpClient})

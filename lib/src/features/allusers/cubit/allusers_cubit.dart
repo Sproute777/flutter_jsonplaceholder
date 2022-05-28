@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../common/models/models.dart';
 import '../../../common/remote_datasource/jsonplaceholder_api_client.dart';
-import '../../../data/models/models.dart';
 import '../data/allusers_api_client.dart';
 
 part 'allusers_state.dart';
