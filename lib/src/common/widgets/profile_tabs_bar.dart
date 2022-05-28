@@ -37,8 +37,8 @@ class ProfileTabBarState extends State<ProfileTabBar> {
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: [
         ProfilePage(user: widget.user),
+        AlbumPage(userId: widget.user.user.id),
         PostsPage(userId: widget.user.user.id),
-        AlbumPage(userId: widget.user.user.id)
       ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

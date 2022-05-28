@@ -33,28 +33,42 @@ class _PageView extends StatelessWidget {
               if (state.posts.isEmpty) {
                 return const Center(child: Text('no photos'));
               }
-              return Container();
-            // return ListView.builder(
-            //   padding: const EdgeInsets.all(32),
-            //   itemCount: state.hasReachedMax
-            //       ? state.photos.length
-            //       : state.photos.length + 3,
-            //   controller: _scrollController,
-            //   itemBuilder: (context, index) => index >= state.photos.length
-            //       ? const BottomLoader()
-            //       : PhotoItem(
-            //           photo: state.photos[index],
-            //           onTap: () => setState(() =>
-            //               _expandedIndices.contains(index)
-            //                   ? _expandedIndices.remove(index)
-            //                   : _expandedIndices.add(index)),
-            //         ),
-            //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //     crossAxisCount: 3,
-            //     mainAxisSpacing: 16.0,
-            //     crossAxisSpacing: 16.0,
-            //   ),
-            // );
+              return ListView.builder(
+                itemCount: state.posts.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            color: Colors.blue[800]!,
+                            width: 1.0,
+                            style: BorderStyle.solid),
+                        gradient: LinearGradient(
+                            colors: [
+                              Colors.blue[50]!,
+                              Colors.blue[100]!,
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter)),
+                    alignment: Alignment.center,
+                    // height: 60,
+                    child: ExpansionTile(
+                      trailing: const Icon(
+                        Icons.arrow_drop_down,
+                      ),
+                      title: Text(state.posts[index].title),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(state.posts[index].body),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
 
             case PostsStatus.loading:
               return const Center(child: CircularProgressIndicator());
