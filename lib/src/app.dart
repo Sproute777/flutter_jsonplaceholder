@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'dart:ui';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'common/models/models.dart';
-import 'common/route/app_routes.dart';
 import 'common/widgets/profile_tabs_bar.dart';
 import 'data/todos_repository.dart';
 import 'features/allusers/view/allusers_page.dart';
@@ -37,26 +33,6 @@ class _AppView extends StatelessWidget {
         builder: (BuildContext context, GoRouterState state) =>
             const AllusersPage(),
       ),
-      // GoRoute(
-      //     path: '/tab-bar',
-      //     builder: (BuildContext context, GoRouterState state) {
-      //       final Map<String, Object> params =
-      //           state.extra! as Map<String, Object>;
-      //       final ProfileUser profileUser =
-      //           params['profileUser']! as ProfileUser;
-      //       return ProfileTabBar(user: profileUser);
-      //     }),
-      //          GoRoute(
-      //   path: '/profile',
-      //   redirect: (_) => '/books/popular',
-      // ),
-      // GoRoute(
-      //   path: '/profile',
-      //   redirect: (GoRouterState state) {
-
-      //     return '/profile/user/${state.params['userId']}';
-      //   },
-      // ),
       GoRoute(
         path: '/profile/:kind(user|albums|posts)',
         pageBuilder: (BuildContext context, GoRouterState state) {
@@ -67,19 +43,6 @@ class _AppView extends StatelessWidget {
               key: _scaffoldKey,
               child: ProfileTabBar(state.params['kind']!, user: profileUser));
         },
-
-        // routes: <GoRoute>[
-        //   GoRoute(
-        //     path: ':userId',
-        //     builder: (BuildContext context, GoRouterState state) {
-        //       final String bookId = state.params['bookId']!;
-        //       final Book? selectedBook = libraryInstance.allBooks
-        //           .firstWhereOrNull((Book b) => b.id.toString() == bookId);
-
-        //       return BookDetailsScreen(book: selectedBook);
-        //     },
-        //   ),
-        // ],
       ),
     ],
   );
@@ -91,14 +54,11 @@ class _AppView extends StatelessWidget {
           .copyWith(dragDevices: {PointerDeviceKind.mouse}),
       routeInformationParser: appRouter.routeInformationParser,
       routerDelegate: appRouter.routerDelegate,
-      // home: const AllusersPage(),
     );
   }
 }
 
-/// A page that fades in an out.
 class FadeTransitionPage extends CustomTransitionPage<void> {
-  /// Creates a [FadeTransitionPage].
   FadeTransitionPage({
     required LocalKey key,
     required Widget child,
