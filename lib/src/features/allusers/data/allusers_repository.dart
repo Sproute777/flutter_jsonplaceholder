@@ -1,4 +1,4 @@
-import '../../../common/local_datasource/dao/user_dao.dart';
+import '../../../common/database/drift/drift.dart';
 import '../../../common/models/models.dart';
 
 class AllusersRepository {

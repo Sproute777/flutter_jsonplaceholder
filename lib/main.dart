@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'bootstrap.dart';
-import 'src/common/local_datasource/local_datasource.dart';
+import 'src/common/database/drift/drift.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

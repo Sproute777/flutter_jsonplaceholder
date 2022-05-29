@@ -1,4 +1,4 @@
-export '../../common/local_datasource/database/app_database.dart'
+export '../database/drift/app_database.dart'
     show
         User,
         UsersCompanion,
