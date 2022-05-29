@@ -1,9 +1,8 @@
-import '../../../common/remote_datasource/jsonplaceholder_api_client.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/photos_bloc.dart';
+import '../data/photos_api_client.dart';
 import '../widgets/photo_item.dart';
 import '../widgets/photo_loader.dart';
 
@@ -20,7 +19,7 @@ class PhotoInfinityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          PhotosBloc(albumId, JsonplaceholderApiClient())..add(PhotosFetched()),
+          PhotosBloc(albumId, PhotosApiClient())..add(PhotosFetched()),
       child: const _PhotoInfinityView(),
     );
   }

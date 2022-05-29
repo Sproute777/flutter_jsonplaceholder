@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/remote_datasource/jsonplaceholder_api_client.dart';
 import '../cubit/posts_cubit.dart';
+import '../data/posts_api_client.dart';
 
 class PostsPage extends StatelessWidget {
   final int userId;
@@ -12,7 +12,7 @@ class PostsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          PostsCubit(JsonplaceholderApiClient(), userId: userId)..fetchPosts(),
+          PostsCubit(PostsApiClient(), userId: userId)..fetchPosts(),
       child: const _PageView(),
     );
   }

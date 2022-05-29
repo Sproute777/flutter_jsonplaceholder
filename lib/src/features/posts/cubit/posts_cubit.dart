@@ -1,16 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../common/remote_datasource/jsonplaceholder_api_client.dart';
 import '../../../common/models/models.dart';
+import '../data/posts_api_client.dart';
 
 part 'posts_state.dart';
 
 class PostsCubit extends Cubit<PostsState> {
-  final JsonplaceholderApiClient _apiClient;
+  final PostsApiClient _apiClient;
   final int userId;
 
-  PostsCubit(JsonplaceholderApiClient apiClient, {required this.userId})
+  PostsCubit(PostsApiClient apiClient, {required this.userId})
       : _apiClient = apiClient,
         super(const PostsState.initial());
 

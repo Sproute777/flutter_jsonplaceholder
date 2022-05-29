@@ -3,9 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-
-import '../../../common/remote_datasource/jsonplaceholder_api_client.dart';
 import '../../../common/models/models.dart';
+import '../data/photos_api_client.dart';
 
 part 'photos_event.dart';
 part 'photos_state.dart';
@@ -19,10 +18,10 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 }
 
 class PhotosBloc extends Bloc<PhotosEvent, PhotosState> {
-  final JsonplaceholderApiClient _apiClient;
+  final PhotosApiClient _apiClient;
   final int albumId;
 
-  PhotosBloc(this.albumId, JsonplaceholderApiClient apiClient)
+  PhotosBloc(this.albumId, PhotosApiClient apiClient)
       : _apiClient = apiClient,
         super(const PhotosState()) {
     on<PhotosFetched>(_onPhotosFetched,

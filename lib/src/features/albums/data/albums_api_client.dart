@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../../common/models/models.dart';
-import '../../../common/remote_datasource/endpoints.dart';
+import '../../../common/constants/http_endpoints.dart';
 import '../../../common/utils/http_errors.dart';
 
 class AlbumsApiClient {

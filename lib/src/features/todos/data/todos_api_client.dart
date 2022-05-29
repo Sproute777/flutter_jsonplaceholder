@@ -6,27 +6,22 @@ import '../../../common/models/models.dart';
 import '../../../common/constants/http_endpoints.dart';
 import '../../../common/utils/http_errors.dart';
 
-class PhotosApiClient {
-  PhotosApiClient({http.Client? httpClient})
+class TodosApiClient {
+  TodosApiClient({http.Client? httpClient})
       : _httpClient = httpClient ?? http.Client();
 
   final http.Client _httpClient;
 
-  // 5000
-  Future<List<Photo>> fetchPhotos(int albumId,
-      {int startIndex = 0, int limit = 20}) async {
-    final queryParams = <String, String>{
-      'albumId': '$albumId',
-      '_start': '$startIndex',
-      '_limit': '$limit'
-    };
-    final uri = Uri.https(baseUrl, photos, queryParams);
-    return _getPhotos(uri);
+// 200 штук ,может быть грузить порциями
+  Future<List<Todo>> fetchTodos() async {
+    // final queryParams = <String, String>{};
+    final uri = Uri.https(baseUrl, todos);
+    return _getTodos(uri);
   }
 
   // -----------------------------------------------------------------------------//
 
-  Future<List<Photo>> _getPhotos(Uri uri) async {
+  Future<List<Todo>> _getTodos(Uri uri) async {
     http.Response response = await _httpClient
         .get(uri)
         .onError((error, stackTrace) => throw HttpException());
@@ -44,7 +39,7 @@ class PhotosApiClient {
 
     try {
       return body
-          .map((dynamic item) => Photo.fromJson(item as Map<String, dynamic>))
+          .map((dynamic item) => Todo.fromJson(item as Map<String, dynamic>))
           .toList();
     } on Exception {
       throw JsonDeserializationException();
