@@ -1,14 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'dart:async';
-import 'dart:developer';
+import 'dart:developer' as developer;
 import 'package:bloc/bloc.dart';
+import 'src/core/utils/app_loging.dart';
 
 import 'src/app.dart';
 import 'src/core/database/drift/drift.dart';
 
 void bootstrap({required AppDatabase database}) {
+  setLogging();
   FlutterError.onError = (details) {
-    log(details.exceptionAsString(), stackTrace: details.stack);
+    developer.log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
   runZonedGuarded(
@@ -20,6 +22,7 @@ void bootstrap({required AppDatabase database}) {
         // blocObserver: AppBlocObserver(),
       );
     },
-    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+    (error, stackTrace) =>
+        developer.log(error.toString(), stackTrace: stackTrace),
   );
 }

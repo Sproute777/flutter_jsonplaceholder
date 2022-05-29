@@ -18,9 +18,10 @@ class PostsCubit extends Cubit<PostsState> {
     emit(const PostsState.loading());
 
     try {
-      final posts = await _apiClient.fetchPosts();
+      final posts = await _apiClient.fetchPosts(userId);
       emit(PostsState.success(posts));
     } catch (e) {
+      print('$e');
       emit(const PostsState.error());
     }
   }
