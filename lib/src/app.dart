@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jsonplaceholder/src/common/local_datasource/database/app_database.dart';
 import 'package:go_router/go_router.dart';
 
 import 'dart:ui';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'common/models/models.dart';
 import 'common/widgets/profile_tabs_bar.dart';
-import 'data/todos_repository.dart';
+import 'common/todos_repository.dart';
 import 'features/allusers/view/allusers_page.dart';
 
 class AppView extends StatelessWidget {
-  const AppView({Key? key, required this.todosRepository}) : super(key: key);
+  const AppView({Key? key, required this.database}) : super(key: key);
 
-  final TodosRepository todosRepository;
+  final AppDatabase database;
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-      value: todosRepository,
+      value: database,
       child: _AppView(),
     );
   }

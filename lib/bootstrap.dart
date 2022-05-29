@@ -5,20 +5,20 @@ import 'package:bloc/bloc.dart';
 
 import 'src/app.dart';
 import 'src/common/local_datasource/local_datasource.dart';
-import 'src/data/todos_repository.dart';
+import 'src/common/todos_repository.dart';
 
-void bootstrap({required UsersDao todosApi}) {
+void bootstrap({required AppDatabase database}) {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  final todosRepository = TodosRepository(todosApi: todosApi);
+  // final todosRepository = TodosRepository(todosApi: todosApi);
 
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
         () async => runApp(
-          AppView(todosRepository: todosRepository),
+          AppView(database: database),
         ),
         // blocObserver: AppBlocObserver(),
       );

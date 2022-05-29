@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_jsonplaceholder/src/features/allusers/data/allusers_repository.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../common/local_datasource/local_datasource.dart';
 import '../cubit/allusers_cubit.dart';
 import '../data/allusers_api_client.dart';
 
@@ -11,7 +13,11 @@ class AllusersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => AllusersCubit(AllusersApiClient())..fetchUsers(),
+        create: (context) => AllusersCubit(
+            AllusersApiClient(),
+            AllusersRepository(
+                UsersDao(RepositoryProvider.of<AppDatabase>(context))))
+          ..fetchUsers(),
         child: const _AllusersView());
   }
 }
