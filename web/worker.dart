@@ -1,7 +1,7 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 
-import 'package:flutter_jsonplaceholder/src/common/local_datasource/connect/web.dart';
+import 'package:flutter_jsonplaceholder/src/common/database/drift/connect/web.dart';
 import 'package:drift/web.dart';
 import 'package:drift/remote.dart';
 
