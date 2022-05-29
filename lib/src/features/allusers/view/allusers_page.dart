@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_jsonplaceholder/src/features/allusers/data/allusers_repository.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../common/database/drift/drift.dart';
+import '../../../core/database/drift/drift.dart';
 import '../cubit/allusers_cubit.dart';
 import '../data/allusers_api_client.dart';
 

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../../common/models/models.dart';
+import '../../../core/models/models.dart';
 import '../data/albums_api_client.dart';
 
 part 'album_state.dart';

@@ -1,4 +1,4 @@
-import '../../../common/database/drift/drift.dart';
+import '../../../core/database/drift/drift.dart';
 
 class AllusersRepository {
   const AllusersRepository(UsersDao usersDao) : _usersDao = usersDao;

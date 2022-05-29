@@ -8,7 +8,7 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc(Connectivity connectivity)
       : _connectivity = connectivity,
-        super(AppState()) {
+        super(const AppState()) {
     on<AppConnectivitySubscriptionRequested>(_onSubscriptionRequested);
   }
 

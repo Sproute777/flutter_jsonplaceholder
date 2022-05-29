@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../../common/constants/http_endpoints.dart';
-import '../../../common/utils/http_errors.dart';
-import '../../../common/models/models.dart';
+import '../../../core/constants/http_endpoints.dart';
+import '../../../core/utils/http_errors.dart';
+import '../../../core/models/models.dart';
 
 class AllusersApiClient {
   AllusersApiClient({http.Client? httpClient})

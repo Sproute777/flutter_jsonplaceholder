@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import 'dart:ui';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'common/database/drift/drift.dart';
-import 'common/models/models.dart';
-import 'common/widgets/profile_tabs_bar.dart';
+import 'core/database/drift/drift.dart';
+import 'core/models/models.dart';
+import 'core/widgets/profile_tabs_bar.dart';
 import 'features/allusers/view/allusers_page.dart';
 
 class AppView extends StatelessWidget {

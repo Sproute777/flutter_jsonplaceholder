@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 
 import 'src/app.dart';
-import 'src/common/database/drift/drift.dart';
+import 'src/core/database/drift/drift.dart';
 
 void bootstrap({required AppDatabase database}) {
   FlutterError.onError = (details) {
