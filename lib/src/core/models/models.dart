@@ -18,3 +18,4 @@ export '../database/drift/app_database.dart'
         CommentsCompanion;
 
 export 'profile_user.dart';
+export 'post_with_comments.dart';

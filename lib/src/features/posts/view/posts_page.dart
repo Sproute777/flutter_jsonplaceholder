@@ -58,12 +58,35 @@ class _PageView extends StatelessWidget {
                       trailing: const Icon(
                         Icons.arrow_drop_down,
                       ),
-                      title: Text(state.posts[index].title),
+                      leading: CircleAvatar(
+                          radius: 12,
+                          child: Text(state.posts[index].post.id.toString())),
+                      title: Text(state.posts[index].post.title),
+                      subtitle: Text(state.posts[index].post.body),
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(state.posts[index].body),
-                        )
+                        ...state.posts[index].comments
+                            .map((c) => Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border:
+                                            Border.all(color: Colors.purple)),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(c.id.toString()),
+                                        Text(c.name),
+                                        Text(c.email),
+                                        Text(c.body),
+                                      ],
+                                    ),
+                                  ),
+                                ))
+                            .toList()
                       ],
                     ),
                   );

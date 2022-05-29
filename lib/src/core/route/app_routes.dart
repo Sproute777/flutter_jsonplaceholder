@@ -6,7 +6,10 @@ import '../models/models.dart';
 import '../widgets/profile_tabs_bar.dart';
 
 GoRouter appRouter() => GoRouter(
+      routerNeglect: true,
+
       initialLocation: '/',
+      // errorPageBuilder: (ctx, state) => MaterialPage(child: AllusersPage()),
       routes: <GoRoute>[
         GoRoute(
           path: '/',

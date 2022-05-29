@@ -8,7 +8,7 @@ import 'src/app.dart';
 import 'src/core/database/drift/drift.dart';
 
 void bootstrap({required AppDatabase database}) {
-  setLogging();
+  // setLogging();
   FlutterError.onError = (details) {
     developer.log(details.exceptionAsString(), stackTrace: details.stack);
   };
