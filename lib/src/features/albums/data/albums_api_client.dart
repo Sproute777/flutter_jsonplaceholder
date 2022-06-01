@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_jsonplaceholder/src/core/models/album_with_photo.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../core/models/models.dart';
@@ -13,15 +14,28 @@ class AlbumsApiClient {
   final http.Client _httpClient;
 
 // 100
-  Future<List<Album>> fetchAlbums(int userId) async {
+  Future<List<AlbumWithPhotos>> fetchAlbums(int userId) async {
     final queryParams = <String, String>{
       'userId': '$userId',
+      '_embed': 'photos',
     };
     final uri = Uri.https(baseUrl, albums, queryParams);
-    return _getAlbums(uri);
+    final response = await _get(uri);
+    try {
+      final body = json.decode(response.body) as List;
+
+      return body.map((dynamic item) {
+        return AlbumWithPhotos(
+            album: Album.fromJson(item as Map<String, dynamic>),
+            photos: List<Photo>.from(item['photos']
+                .map((c) => Photo.fromJson(c as Map<String, dynamic>))));
+      }).toList();
+    } on Exception {
+      throw JsonDeserializationException();
+    }
   }
 
-  Future<List<Album>> _getAlbums(Uri uri) async {
+  Future<http.Response> _get(Uri uri) async {
     http.Response response = await _httpClient
         .get(uri)
         .onError((error, stackTrace) => throw HttpException());
@@ -29,20 +43,6 @@ class AlbumsApiClient {
     if (response.statusCode != 200) {
       throw HttpRequestFailure(response.statusCode);
     }
-    List body;
-
-    try {
-      body = json.decode(response.body) as List;
-    } on Exception {
-      throw JsonDecodeException();
-    }
-
-    try {
-      return body
-          .map((dynamic item) => Album.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } on Exception {
-      throw JsonDeserializationException();
-    }
+    return response;
   }
 }

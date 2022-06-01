@@ -27,7 +27,7 @@ class PostsApiClient {
       // '_limit': '20'
     };
     final uri = Uri.https(baseUrl, posts, queryParams);
-    final response = await _getPosts(uri);
+    final response = await _get(uri);
 
     try {
       final body = json.decode(response.body) as List;
@@ -43,19 +43,7 @@ class PostsApiClient {
     }
   }
 
-  Future<http.Response> _getSumComments(Uri uri) async {
-    http.Response response = await _httpClient
-        .get(uri)
-        .onError((error, stackTrace) => throw HttpException());
-
-    if (response.statusCode != 200) {
-      throw HttpRequestFailure(response.statusCode);
-    }
-    return response;
-  }
-  // -----------------------------------------------------------------------------//
-
-  Future<http.Response> _getPosts(Uri uri) async {
+  Future<http.Response> _get(Uri uri) async {
     http.Response response = await _httpClient
         .get(uri)
         .onError((error, stackTrace) => throw HttpException());

@@ -48,8 +48,8 @@ class _AlbumView extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                            PhotoInfinityPage.route(state.albums[index].id));
+                        Navigator.of(context).push(PhotoInfinityPage.route(
+                            state.albums[index].album.id));
                       },
                       child: Container(
                           margin: const EdgeInsets.symmetric(
@@ -64,7 +64,7 @@ class _AlbumView extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  state.albums[index].title,
+                                  state.albums[index].album.title,
                                   textAlign: TextAlign.center,
                                   softWrap: true,
                                   maxLines: 1,

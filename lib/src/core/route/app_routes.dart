@@ -23,9 +23,7 @@ GoRouter appRouter() => GoRouter(
                 state.extra! as Map<String, Object>;
             final ProfileUser profileUser =
                 params['profileUser']! as ProfileUser;
-            return (
-                // key: _scaffoldKey,
-                ProfileTabBar(state.params['kind']!, user: profileUser));
+            return ProfileTabBar(state.params['kind']!, user: profileUser);
           },
         ),
       ],
