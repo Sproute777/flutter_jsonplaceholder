@@ -11,16 +11,16 @@ Future<void> main() async {
   // runApp(Home());
 }
 
-// class Home extends StatelessWidget {
-//   const Home({Key? key}) : super(key: key);
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(home: Scaffold(
-//       floatingActionButton: FloatingActionButton(onPressed: () async {
-//         final post = await PostsApiClient().fetchPosts(1);
-//         print('${post.toString()}');
-//       }),
-//     ));
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        final post = await PostsApiClient().fetchPosts(1);
+        print('${post.toString()}');
+      }),
+    ));
+  }
+}
