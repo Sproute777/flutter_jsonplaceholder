@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_jsonplaceholder/src/core/route/router.dart';
-import 'core/database/drift/drift.dart';
+
+import 'app/database/drift/drift.dart';
+import 'app/route/router.dart';
 
 class AppView extends StatelessWidget {
   const AppView({Key? key, required this.database}) : super(key: key);

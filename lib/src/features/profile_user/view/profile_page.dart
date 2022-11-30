@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/models/models.dart';
+
+import '../../../app/models/models.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key, required this.user}) : super(key: key);

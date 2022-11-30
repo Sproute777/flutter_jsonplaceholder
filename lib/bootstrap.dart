@@ -4,7 +4,7 @@ import 'dart:developer' as developer;
 import 'package:bloc/bloc.dart';
 
 import 'src/app.dart';
-import 'src/core/database/drift/drift.dart';
+import 'src/app/database/drift/app_database.dart';
 
 void bootstrap({required AppDatabase database}) {
   FlutterError.onError = (details) {
@@ -13,10 +13,8 @@ void bootstrap({required AppDatabase database}) {
 
   runZonedGuarded(
     () async {
-      await BlocOverrides.runZoned(
-        () async => runApp(
-          AppView(database: database),
-        ),
+      runApp(
+        AppView(database: database),
         // blocObserver: AppBlocObserver(),
       );
     },

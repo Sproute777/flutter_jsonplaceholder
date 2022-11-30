@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../core/models/models.dart';
-import '../../../core/utils/http_errors.dart';
+import '../../../app/models/models.dart';
+import '../../../app/utils/http_errors.dart';
 import '../data/allusers_api_client.dart';
 import '../data/allusers_repository.dart';
 

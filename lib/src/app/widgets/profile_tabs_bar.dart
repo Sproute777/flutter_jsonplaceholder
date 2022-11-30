@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_jsonplaceholder/src/core/route/routes/app_routes.dart';
 
 import '../../features/albums/view/album_page.dart';
 import '../../features/posts/view/posts_page.dart';
 import '../../features/profile_user/view/profile_page.dart';
 import '../models/models.dart';
+import '../route/routes/app_routes.dart';
 
 class ProfileTabBar extends StatefulWidget {
   final ProfileUser user;

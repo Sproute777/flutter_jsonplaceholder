@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_jsonplaceholder/src/core/route/routes/app_routes.dart';
 import 'package:flutter_jsonplaceholder/src/features/allusers/data/allusers_repository.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../core/database/drift/drift.dart';
+import '../../../app/database/drift/app_database.dart';
+import '../../../app/database/drift/dao/user_dao.dart';
+import '../../../app/route/routes/app_routes.dart';
 import '../cubit/allusers_cubit.dart';
 import '../data/allusers_api_client.dart';
 
@@ -60,8 +60,7 @@ class _AllusersView extends StatelessWidget {
                     highlightColor: Colors.green[100],
                     splashColor: Colors.green[200],
                     onTap: () {
-                      AlbumsRoute($extra: state.users[index] ).go(context);
-                     
+                      AlbumsRoute($extra: state.users[index]).go(context);
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(

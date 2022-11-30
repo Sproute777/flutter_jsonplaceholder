@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../../core/models/models.dart';
-import '../../../core/constants/http_endpoints.dart';
-import '../../../core/utils/http_errors.dart';
+import '../../../app/constants/http_endpoints.dart';
+import '../../../app/database/drift/drift.dart';
+import '../../../app/utils/http_errors.dart';
 
 class PhotosApiClient {
   PhotosApiClient({http.Client? httpClient})

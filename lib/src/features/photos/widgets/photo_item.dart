@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/models/models.dart';
+import '../../../app/database/drift/app_database.dart';
 
 class PhotoItem extends StatelessWidget {
   const PhotoItem({Key? key, required this.photo, this.onTap})

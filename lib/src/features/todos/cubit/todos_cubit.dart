@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../core/models/models.dart';
+import '../../../app/database/drift/drift.dart';
 
 part 'todos_state.dart';
 

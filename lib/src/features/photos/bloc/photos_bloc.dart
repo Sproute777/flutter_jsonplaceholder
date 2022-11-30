@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:stream_transform/stream_transform.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import '../../../core/models/models.dart';
+import 'package:stream_transform/stream_transform.dart';
+
+import '../../../app/database/drift/app_database.dart';
 import '../data/photos_api_client.dart';
 
 part 'photos_event.dart';

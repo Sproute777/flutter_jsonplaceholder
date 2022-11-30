@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter_jsonplaceholder/src/core/models/album_with_photo.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../core/models/models.dart';
-import '../../../core/constants/http_endpoints.dart';
-import '../../../core/utils/http_errors.dart';
+import '../../../app/constants/http_endpoints.dart';
+import '../../../app/database/drift/app_database.dart';
+import '../../../app/models/album_with_photo.dart';
+import '../../../app/utils/http_errors.dart';
 
 class AlbumsApiClient {
   AlbumsApiClient({http.Client? httpClient})
