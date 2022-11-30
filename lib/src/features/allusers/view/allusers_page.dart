@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_jsonplaceholder/src/core/route/routes/app_routes.dart';
 import 'package:flutter_jsonplaceholder/src/features/allusers/data/allusers_repository.dart';
 import 'package:go_router/go_router.dart';
 
@@ -59,9 +60,8 @@ class _AllusersView extends StatelessWidget {
                     highlightColor: Colors.green[100],
                     splashColor: Colors.green[200],
                     onTap: () {
-                      context.go('/profile/albums', extra: <String, Object>{
-                        'profileUser': state.users[index]
-                      });
+                      AlbumsRoute($extra: state.users[index] ).go(context);
+                     
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(

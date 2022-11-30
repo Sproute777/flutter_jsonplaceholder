@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_jsonplaceholder/src/core/route/routes/app_routes.dart';
 
 import '../../features/albums/view/album_page.dart';
 import '../../features/posts/view/posts_page.dart';
@@ -62,17 +62,14 @@ class ProfileTabBarState extends State<ProfileTabBar> {
   void _handleTabTapped(int index) {
     switch (index) {
       case 1:
-        context.go('/profile/albums',
-            extra: <String, Object>{'profileUser': widget.user});
+        AlbumsRoute($extra: widget.user).go(context);
         break;
       case 2:
-        context.go('/profile/posts',
-            extra: <String, Object>{'profileUser': widget.user});
+        PostsRoute($extra: widget.user).go(context);
         break;
       case 0:
       default:
-        context.go('/profile/user',
-            extra: <String, Object>{'profileUser': widget.user});
+        UserRoute($extra: widget.user).go(context);
         break;
     }
   }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_jsonplaceholder/src/core/route/router.dart';
 import 'core/database/drift/drift.dart';
-
-import 'core/route/app_routes.dart';
 
 class AppView extends StatelessWidget {
   const AppView({Key? key, required this.database}) : super(key: key);
@@ -19,16 +18,23 @@ class AppView extends StatelessWidget {
   }
 }
 
-class _AppView extends StatelessWidget {
+class _AppView extends StatefulWidget {
   const _AppView({Key? key}) : super(key: key);
+  @override
+  _AppViewState createState() => _AppViewState();
+}
+
+class _AppViewState extends State<_AppView> {
+  late final appRouter = AppRouter.createRouter();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      scrollBehavior: const MaterialScrollBehavior()
-          .copyWith(dragDevices: {PointerDeviceKind.mouse}),
-      routeInformationParser: appRouter().routeInformationParser,
-      routerDelegate: appRouter().routerDelegate,
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+          dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch}),
+      routeInformationParser: appRouter.routeInformationParser,
+      routerDelegate: appRouter.routerDelegate,
+      routeInformationProvider: appRouter.routeInformationProvider,
     );
   }
 }
