@@ -1,10 +1,10 @@
 part of 'app_routes.dart';
 
-@TypedGoRoute<AllusersRoute>(path: '/',routes: <TypedGoRoute>[
-TypedGoRoute<UserRoute>(path: '/pofile/user'),
-TypedGoRoute<PostsRoute>(path: '/profile/posts'),
-TypedGoRoute<AlbumsRoute>(path: '/profile/albums')
-] )
+@TypedGoRoute<AllusersRoute>(path: '/', routes: <TypedGoRoute>[
+  TypedGoRoute<UserRoute>(path: 'pofile/user'),
+  TypedGoRoute<PostsRoute>(path: 'profile/posts'),
+  TypedGoRoute<AlbumsRoute>(path: 'profile/albums')
+])
 class AllusersRoute extends GoRouteData {
   const AllusersRoute();
 
@@ -42,6 +42,4 @@ class AlbumsRoute extends GoRouteData {
   @override
   Page<void> buildPageWithState(BuildContext context, GoRouterState state) =>
       MaterialPage<Object>(child: ProfileTabBar('albums', user: $extra!));
-  // @override
-  // Widget build(BuildContext context) => ProfileTabBar('albums', user: $extra);
 }

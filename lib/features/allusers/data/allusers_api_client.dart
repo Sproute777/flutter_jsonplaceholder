@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
 import '../../../app/constants/http_endpoints.dart';
 import '../../../app/database/drift/app_database.dart';

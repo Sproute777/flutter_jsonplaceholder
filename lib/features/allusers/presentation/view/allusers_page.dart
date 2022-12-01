@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_jsonplaceholder/core/http/app_api_service.dart';
 import 'package:flutter_jsonplaceholder/features/allusers/data/datasources/allusers_datasources.dart';
+import 'package:get_it/get_it.dart';
 // import '../../../../app/database/drift/app_database.dart';
 // import '../../../../app/database/drift/dao/user_dao.dart';
-import '../../../../app/route/routes/app_routes.dart';
+// import '../../../../app/route/routes/app_routes.dart';
 // import '../../cubit/allusers_cubit.dart';
 // import '../../data/allusers_api_client.dart';
 // import '../../data/allusers_repository.dart';
-import '../../data/repositories/allusers_repository_impl.dart';
 // import '../../domain/repositories/allusers_repository.dart';
+import '../../domain/repositories/allusers_repository.dart';
 import '../bloc/allusers_bloc.dart';
 
 class AllusersPage extends StatelessWidget {
@@ -20,13 +21,10 @@ class AllusersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => AllusersBloc(
-              AllusersRepositoryImpl(
-                AllusersRemoteDatasources(
-                  apiService: AppApiService(
-                    Dio(),
+              AllusersRepositoryImpl(GetIt.I.get()
+                  // ),
+                  // ),
                   ),
-                ),
-              ),
             )..add(const AllusersEvent.read()),
         child: const _AllusersView());
   }
