@@ -1,9 +1,11 @@
 // import 'package:injectable/injectable.dart';
 
+import 'package:injectable/injectable.dart';
+
 import '../../../../core/http/app_api_service.dart';
 import '../models/user_dto.dart';
 
-// @lazySingleton
+@injectable
 class AllusersRemoteDatasources {
   const AllusersRemoteDatasources({required AppApiService apiService})
       : _apiService = apiService;

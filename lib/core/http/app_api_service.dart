@@ -11,6 +11,7 @@ part 'app_api_service.g.dart';
 
 // ignore: unnecessary_string_interpolations
 @RestApi(baseUrl: '${HttpConfig.baseUrl}')
+@injectable
 abstract class AppApiService {
   @factoryMethod
   factory AppApiService(Dio dio) = _AppApiService;

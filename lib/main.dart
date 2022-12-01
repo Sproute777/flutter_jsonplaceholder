@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'bootstrap.dart';
+import 'app/bootstrap.dart';
 import 'app/database/drift/app_database.dart';
 
 Future<void> main() async {

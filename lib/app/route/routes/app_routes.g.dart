@@ -15,15 +15,15 @@ GoRoute get $allusersRoute => GoRouteData.$route(
       factory: $AllusersRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: '/pofile/user',
+          path: 'pofile/user',
           factory: $UserRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/profile/posts',
+          path: 'profile/posts',
           factory: $PostsRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/profile/albums',
+          path: 'profile/albums',
           factory: $AlbumsRouteExtension._fromState,
         ),
       ],
