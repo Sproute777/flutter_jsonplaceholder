@@ -3,8 +3,8 @@ import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:bloc/bloc.dart';
 
-import 'src/app.dart';
-import 'src/app/database/drift/app_database.dart';
+import 'app.dart';
+import 'app/database/drift/app_database.dart';
 
 void bootstrap({required AppDatabase database}) {
   FlutterError.onError = (details) {
