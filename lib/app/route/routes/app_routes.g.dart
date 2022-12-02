@@ -43,7 +43,7 @@ extension $AllusersRouteExtension on AllusersRoute {
 
 extension $UserRouteExtension on UserRoute {
   static UserRoute _fromState(GoRouterState state) => UserRoute(
-        $extra: state.extra as ProfileUser?,
+        $extra: state.extra as UserModel?,
       );
 
   String get location => GoRouteData.$location(
@@ -57,7 +57,7 @@ extension $UserRouteExtension on UserRoute {
 
 extension $PostsRouteExtension on PostsRoute {
   static PostsRoute _fromState(GoRouterState state) => PostsRoute(
-        $extra: state.extra as ProfileUser?,
+        $extra: state.extra as UserModel?,
       );
 
   String get location => GoRouteData.$location(
@@ -71,7 +71,7 @@ extension $PostsRouteExtension on PostsRoute {
 
 extension $AlbumsRouteExtension on AlbumsRoute {
   static AlbumsRoute _fromState(GoRouterState state) => AlbumsRoute(
-        $extra: state.extra as ProfileUser?,
+        $extra: state.extra as UserModel?,
       );
 
   String get location => GoRouteData.$location(

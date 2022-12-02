@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/models/models.dart';
+import '../../allusers/domain/models/user_model.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key, required this.user}) : super(key: key);
-  final ProfileUser user;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class ProfilePage extends StatelessWidget {
 }
 
 class _ProfileView extends StatelessWidget {
-  final ProfileUser user;
+  final UserModel user;
   const _ProfileView({Key? key, required this.user}) : super(key: key);
 
   @override
@@ -26,7 +27,7 @@ class _ProfileView extends StatelessWidget {
         body: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           child: _ProfileBody(
-            profileUser: user,
+            user: user,
           ),
         ),
       ),
@@ -35,8 +36,8 @@ class _ProfileView extends StatelessWidget {
 }
 
 class _ProfileBody extends StatelessWidget {
-  final ProfileUser profileUser;
-  const _ProfileBody({Key? key, required this.profileUser}) : super(key: key);
+  final UserModel user;
+  const _ProfileBody({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,151 +69,132 @@ class _ProfileBody extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _Row(
-                            title: 'username', text: profileUser.user.username),
+                        _Row(title: 'username', text: user.username),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        _Row(title: 'name', text: profileUser.user.name ?? ''),
+                        _Row(title: 'name', text: user.name),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        _Row(
-                            title: 'email', text: profileUser.user.email ?? ''),
+                        _Row(title: 'email', text: user.email),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        _Row(
-                            title: 'phone', text: profileUser.user.phone ?? ''),
+                        _Row(title: 'phone', text: user.phone),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        _Row(
-                            title: 'website',
-                            text: profileUser.user.website ?? ''),
+                        _Row(title: 'website', text: user.website),
                         const SizedBox(
                           height: 16.0,
                         ),
                       ])),
             ],
           ),
-          if (profileUser.address != null) ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 16.0, left: 16.0),
-                    child: Text("Address",
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white60,
-                            fontWeight: FontWeight.bold)),
-                  ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 16.0, left: 16.0),
+                  child: Text("Address",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white60,
+                          fontWeight: FontWeight.bold)),
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        width: 200,
-                        child: Divider(
-                          color: Colors.white30,
-                        ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      width: 200,
+                      child: Divider(
+                        color: Colors.white30,
                       ),
-                      _Row(
-                          title: 'street',
-                          text: profileUser.address!.street ?? ''),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _Row(
-                          title: 'suite',
-                          text: profileUser.address!.suite ?? ''),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _Row(
-                          title: 'zip-code',
-                          text: profileUser.address!.zipcode ?? ''),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                              width: 100,
-                              child: _Row(
-                                  title: 'latitude',
-                                  text: profileUser.address!.lat ?? '')),
-                          SizedBox(
-                              width: 100,
-                              child: _Row(
-                                  title: 'longitude',
-                                  text: profileUser.address!.lng ?? '')),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                    ],
-                  ),
+                    ),
+                    _Row(title: 'street', text: user.address!.street ?? ''),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    _Row(title: 'suite', text: user.address!.suite ?? ''),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    _Row(title: 'zip-code', text: user.address!.zipcode ?? ''),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                            width: 100,
+                            child: _Row(
+                                title: 'latitude',
+                                text: user.address.geo.lat.toString())),
+                        SizedBox(
+                            width: 100,
+                            child: _Row(
+                                title: 'longitude',
+                                text: user.address.geo.lng.toString())),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ],
-          if (profileUser.company != null) ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 16.0, left: 16.0),
-                    child: Text("Company",
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white60,
-                            fontWeight: FontWeight.bold)),
-                  ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 16.0, left: 16.0),
+                  child: Text("Company",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white60,
+                          fontWeight: FontWeight.bold)),
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        width: 200,
-                        child: Divider(
-                          color: Colors.white30,
-                        ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      width: 200,
+                      child: Divider(
+                        color: Colors.white30,
                       ),
-                      _Row(
-                          title: 'company-name',
-                          text: profileUser.company!.name ?? ''),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _Row(
-                          title: 'catch-phrase',
-                          text: profileUser.company!.catchPhrase ?? ''),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _Row(title: 'bs', text: profileUser.company!.bs ?? ''),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                    ],
-                  ),
+                    ),
+                    _Row(title: 'company-name', text: user.company.name),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    _Row(title: 'catch-phrase', text: user.company.catchPhrase),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    _Row(title: 'bs', text: user.company.bs),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                  ],
                 ),
-              ],
-            )
-          ]
+              ),
+            ],
+          )
         ],
       ),
     );

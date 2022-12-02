@@ -1,11 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'dart:async';
 import 'dart:developer' as developer;
-// import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import 'app.dart';
-import 'database/drift/app_database.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -18,7 +16,8 @@ final getIt = GetIt.instance;
   preferRelativeImports: true,
   asExtension: false,
 )
-void bootstrap({required AppDatabase database}) {
+void bootstrap() {
+  WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = (details) {
     developer.log(details.exceptionAsString(), stackTrace: details.stack);
   };
@@ -29,7 +28,7 @@ void bootstrap({required AppDatabase database}) {
         GetIt.instance,
       );
       runApp(
-        AppView(database: database),
+        const AppView(),
         // blocObserver: AppBlocObserver(),
       );
     },

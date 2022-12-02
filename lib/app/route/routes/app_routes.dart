@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../features/allusers/domain/models/user_model.dart';
 import '../../../features/allusers/presentation/view/allusers_page.dart';
-import '../../models/models.dart';
 import '../../widgets/profile_tabs_bar.dart';
 
 // part 'user_route.dart';

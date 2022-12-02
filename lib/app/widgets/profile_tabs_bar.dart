@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../features/albums/view/album_page.dart';
+import '../../features/allusers/domain/models/user_model.dart';
 import '../../features/posts/view/posts_page.dart';
 import '../../features/profile_user/view/profile_page.dart';
-import '../models/models.dart';
 import '../route/routes/app_routes.dart';
 
 class ProfileTabBar extends StatefulWidget {
-  final ProfileUser user;
+  final UserModel user;
   final String kind;
 
   const ProfileTabBar(this.kind, {Key? key, required this.user})
@@ -37,8 +37,8 @@ class ProfileTabBarState extends State<ProfileTabBar> {
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: [
         ProfilePage(user: widget.user),
-        AlbumPage(userId: widget.user.user.id),
-        PostsPage(userId: widget.user.user.id),
+        AlbumPage(userId: widget.user.id),
+        PostsPage(userId: widget.user.id),
       ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

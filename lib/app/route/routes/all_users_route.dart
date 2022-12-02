@@ -17,7 +17,7 @@ class AllusersRoute extends GoRouteData {
 // @TypedGoRoute<UserRoute>(path: '/pofile/user')
 class UserRoute extends GoRouteData {
   UserRoute({this.$extra});
-  final ProfileUser? $extra;
+  final UserModel? $extra;
 
   @override
   Page<void> buildPageWithState(BuildContext context, GoRouterState state) =>
@@ -26,7 +26,7 @@ class UserRoute extends GoRouteData {
 
 class PostsRoute extends GoRouteData {
   PostsRoute({this.$extra});
-  final ProfileUser? $extra;
+  final UserModel? $extra;
 
   @override
   Page<void> buildPageWithState(BuildContext context, GoRouterState state) =>
@@ -37,7 +37,7 @@ class PostsRoute extends GoRouteData {
 
 class AlbumsRoute extends GoRouteData {
   AlbumsRoute({this.$extra});
-  final ProfileUser? $extra;
+  final UserModel? $extra;
 
   @override
   Page<void> buildPageWithState(BuildContext context, GoRouterState state) =>

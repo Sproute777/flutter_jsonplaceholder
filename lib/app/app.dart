@@ -1,31 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'database/drift/drift.dart';
 import 'route/router.dart';
 
-class AppView extends StatelessWidget {
-  const AppView({Key? key, required this.database}) : super(key: key);
-
-  final AppDatabase database;
-
+class AppView extends StatefulWidget {
+  const AppView({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: database,
-      child: const _AppView(),
-    );
-  }
+  AppViewState createState() => AppViewState();
 }
 
-class _AppView extends StatefulWidget {
-  const _AppView({Key? key}) : super(key: key);
-  @override
-  _AppViewState createState() => _AppViewState();
-}
-
-class _AppViewState extends State<_AppView> {
+class AppViewState extends State<AppView> {
   late final appRouter = AppRouter.createRouter();
 
   @override
