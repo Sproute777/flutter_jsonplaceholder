@@ -7,7 +7,7 @@ import Foundation
 
 import connectivity_macos
 import connectivity_plus_macos
-import path_provider_macos
+import path_provider_foundation
 import shared_preferences_macos
 import sqflite
 import sqlite3_flutter_libs

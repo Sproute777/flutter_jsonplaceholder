@@ -1,35 +1,41 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:json_repository/json_repository.dart';
+import 'dart:ui';
+import '../navigator/app_go_router.dart';
 
-import 'database/drift/drift.dart';
-import 'route/router.dart';
-
-class AppView extends StatelessWidget {
-  const AppView({Key? key, required this.database}) : super(key: key);
-
-  final AppDatabase database;
+class App extends StatelessWidget {
+  final JsonRepository _jsonRepository;
+  const App({Key? key, required JsonRepository jsonRepository})
+      : _jsonRepository = jsonRepository,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: database,
-      child: const _AppView(),
-    );
+    print('two');
+    return RepositoryProvider<JsonRepository>.value(
+        value: _jsonRepository, child: const _AppView());
   }
 }
 
 class _AppView extends StatefulWidget {
   const _AppView({Key? key}) : super(key: key);
+
   @override
   _AppViewState createState() => _AppViewState();
 }
 
 class _AppViewState extends State<_AppView> {
-  late final appRouter = AppRouter.createRouter();
+  late final appRouter = AppGoRouter();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('three');
     return MaterialApp.router(
       scrollBehavior: const MaterialScrollBehavior().copyWith(
           dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch}),
