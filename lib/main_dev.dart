@@ -1,3 +1,4 @@
+import 'package:database_client/database_client.dart';
 import 'package:flutter/material.dart';
 
 import 'app/app.dart';
@@ -9,7 +10,9 @@ void main() {
   bootstrap(() async {
     WidgetsFlutterBinding.ensureInitialized();
     final jsonApiClient = JsonApiClient();
-    final jsonRepository = JsonRepository(jsonApiClient);
+    final databaseClient = DatabaseClient();
+    final jsonStorage = JsonStorage(databaseClient);
+    final jsonRepository = JsonRepository(jsonApiClient, jsonStorage);
 
     return App(
       jsonRepository: jsonRepository,

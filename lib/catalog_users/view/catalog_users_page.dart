@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_jsonplaceholder/navigator/routes/routes.dart';
 import 'package:json_bloc_ui/json_bloc_ui.dart';
 import 'package:json_repository/json_repository.dart';
 
@@ -28,7 +29,22 @@ class _CatalogUsersView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.yellow,
       appBar: AppBar(
-        title: const Text('Catalog users'),
+        actions: [
+          TextButton(
+            onPressed: () => _fetchRemoteUsers(context),
+            child: const Text('Fetch remote',
+                style: TextStyle(color: Colors.white)),
+          ),
+          const SizedBox(width: 8),
+          TextButton(
+            onPressed: () => _loadLocalUsers(context),
+            child: const Text(
+              'Load local',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          const SizedBox(width: 32),
+        ],
       ),
       body: BlocBuilder<CatalogUsersBloc, CatalogUsersState>(
         builder: (context, state) {
@@ -42,9 +58,27 @@ class _CatalogUsersView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(state.users[index].name),
-                      subtitle: Text(state.users[index].username),
-                      trailing: const Icon(Icons.keyboard_arrow_down),
-                      onTap: () {},
+                      subtitle: Column(
+                        children: [
+                          Text(state.users[index].username),
+                          Text(state.users[index].address?.city ?? 'empty'),
+                          Text(state.users[index].company?.name ?? 'empty'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () => _deleteUser(
+                                      context, state.users[index].id),
+                                  child: const Icon(Icons.delete)),
+                              ElevatedButton(
+                                  onPressed: () =>
+                                      UserInfoRoute(state.users[index].id)
+                                          .go(context),
+                                  child: const Icon(Icons.person)),
+                            ],
+                          )
+                        ],
+                      ),
                     );
                   });
             case PersonsStatus.failure:
@@ -53,5 +87,17 @@ class _CatalogUsersView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _deleteUser(BuildContext context, int userId) {
+    context.read<CatalogUsersBloc>().add(DeleteLocalUserRequest(userId));
+  }
+
+  void _loadLocalUsers(BuildContext context) {
+    context.read<CatalogUsersBloc>().add(const LoadLocalCatalogUsersRequest());
+  }
+
+  void _fetchRemoteUsers(BuildContext context) {
+    context.read<CatalogUsersBloc>().add(const LoadCatalogUsersRequest());
   }
 }

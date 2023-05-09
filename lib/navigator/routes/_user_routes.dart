@@ -1,12 +1,12 @@
 part of 'routes.dart';
 
-@TypedShellRoute<PersonTabsRoutes>(routes: <TypedGoRoute>[
-  TypedGoRoute<PersonInfoRoute>(path: '/person/:userId/info'),
-  TypedGoRoute<PostsRoute>(path: '/person/:userId/posts'),
-  TypedGoRoute<AlbumRoute>(path: '/person/:userId/album')
+@TypedShellRoute<UserTabsRoutes>(routes: <TypedGoRoute>[
+  TypedGoRoute<UserInfoRoute>(path: '/user/:userId/info'),
+  TypedGoRoute<PostsRoute>(path: '/user/:userId/posts'),
+  TypedGoRoute<AlbumRoute>(path: '/user/:userId/album')
 ])
-class PersonTabsRoutes extends ShellRouteData {
-  const PersonTabsRoutes();
+class UserTabsRoutes extends ShellRouteData {
+  const UserTabsRoutes();
 
   @override
   Page<void> pageBuilder(
@@ -14,18 +14,18 @@ class PersonTabsRoutes extends ShellRouteData {
       NoTransitionPage(child: ProfileTabsPage(child: navigator));
 }
 
-class PersonInfoRoute extends GoRouteData {
-  PersonInfoRoute(this.userId);
-  final String userId;
+class UserInfoRoute extends GoRouteData {
+  UserInfoRoute(this.userId);
+  final int userId;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) =>
-      const NoTransitionPage(child: PersonInfoPage());
+      NoTransitionPage(child: PersonInfoPage(userId: userId));
 }
 
 class PostsRoute extends GoRouteData {
   PostsRoute(this.userId);
-  final String userId;
+  final int userId;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) =>
@@ -34,7 +34,7 @@ class PostsRoute extends GoRouteData {
 
 class AlbumRoute extends GoRouteData {
   AlbumRoute(this.userId);
-  final String userId;
+  final int userId;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) =>

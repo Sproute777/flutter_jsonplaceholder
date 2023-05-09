@@ -49,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
-  bazel_worker:
-    dependency: transitive
-    description:
-      name: bazel_worker
-      sha256: "500584fdb80bcb70a2990a5838338a757cc24bbf27d88bf791cbe9461c57cd5a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   bloc:
     dependency: "direct main"
     description:
@@ -105,14 +97,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
-  build_modules:
-    dependency: transitive
-    description:
-      name: build_modules
-      sha256: d02a5b40720692c8c4c385741afb1cc50b53f192a33fa5da1f2bdaec3ec6db3e
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.7"
   build_resolvers:
     dependency: transitive
     description:
@@ -137,14 +121,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.2.7"
-  build_web_compilers:
-    dependency: "direct dev"
-    description:
-      name: build_web_compilers
-      sha256: ee45348ba9c2dfd2e165c0adf69311970fa620c6669c345ab533e16d0d119e3d
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.7"
   built_collection:
     dependency: transitive
     description:
@@ -377,7 +353,7 @@ packages:
     source: hosted
     version: "2.7.0"
   drift_dev:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: drift_dev
       sha256: b6c2b1bcf637d34142bf9a0c21d1d290ade2254538be00559360db165b524381
@@ -873,14 +849,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
-  protobuf:
-    dependency: transitive
-    description:
-      name: protobuf
-      sha256: "01dd9bd0fa02548bf2ceee13545d4a0ec6046459d847b6b061d8a27237108a08"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   provider:
     dependency: transitive
     description:
@@ -929,14 +897,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  scratch_space:
-    dependency: transitive
-    description:
-      name: scratch_space
-      sha256: a469a9642a4d7ee406d6224a85446eb8baa9dd6d81e2f0b76770deae7bd32aab
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1038,14 +998,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.3"
-  source_maps:
-    dependency: transitive
-    description:
-      name: source_maps
-      sha256: "708b3f6b97248e5781f493b765c3337db11c5d2c81c3094f10904bfa8004c703"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.10.12"
   source_span:
     dependency: transitive
     description:
@@ -1071,7 +1023,7 @@ packages:
     source: hosted
     version: "2.4.0+2"
   sqlite3:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: sqlite3
       sha256: a3ba4b66a7ab170ce7aa3f5ac43c19ee8d6637afbe7b7c95c94112b4f4d91566

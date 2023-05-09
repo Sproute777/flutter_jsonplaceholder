@@ -1,11 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:json_repository/json_repository.dart';
+
+import '../bloc/user_info_bloc.dart';
 
 class PersonInfoPage extends StatelessWidget {
-  const PersonInfoPage({super.key});
+  final int userId;
+
+  const PersonInfoPage({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return BlocProvider(
+      create: (context) => UserInfoBloc(
+        RepositoryProvider.of<JsonRepository>(context),
+      )..add(FetchSingleUserRequest(userId)),
+      child: const PersonInfoView(),
+    );
+  }
+}
+
+class PersonInfoView extends StatelessWidget {
+  const PersonInfoView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocBuilder<UserInfoBloc, UserInfoState>(
+        builder: (context, state) {
+          switch (state.status) {
+            case UserInfoStatus.init:
+            case UserInfoStatus.loading:
+              return const Center(child: Text('loading ..'));
+            case UserInfoStatus.failure:
+              return const Center(child: Text('failure'));
+            case UserInfoStatus.loaded:
+              return Column(
+                children: [
+                  Text('name ${state.user!.name}'),
+                  Text('username ${state.user!.username}'),
+                  Text(state.user!.email),
+                  Text(state.user!.phone),
+                  Text(state.user!.website),
+                  if (state.user!.address != null) ...[
+                    Text('---Address--'),
+                    Text('city ${state.user!.address!.city}'),
+                    Text('suite ${state.user!.address!.suite}'),
+                    Text('zipcode ${state.user!.address!.zipcode}'),
+                    Text('street ${state.user!.address!.street}'),
+                  ],
+                  if (state.user!.company != null) ...[
+                    Text('---COMPANY---'),
+                    Text('name ${state.user!.company!.name}'),
+                    Text('catch phrase${state.user!.company!.catchPhrase}'),
+                    Text('bs ${state.user!.company!.bs}'),
+                  ]
+                ],
+              );
+          }
+        },
+      ),
+    );
   }
 }
 

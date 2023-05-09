@@ -5,7 +5,7 @@ import '../cubit/posts_cubit.dart';
 import '../data/posts_api_client.dart';
 
 class PostsPage extends StatelessWidget {
-  final String userId;
+  final int userId;
   const PostsPage({Key? key, required this.userId}) : super(key: key);
 
   @override

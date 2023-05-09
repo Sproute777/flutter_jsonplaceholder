@@ -5,7 +5,7 @@ import '../cubit/album_cubit.dart';
 import '../data/albums_api_client.dart';
 
 class AlbumPage extends StatelessWidget {
-  final String userId;
+  final int userId;
   const AlbumPage({Key? key, required this.userId}) : super(key: key);
 
   @override

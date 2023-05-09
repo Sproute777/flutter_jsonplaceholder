@@ -10,3 +10,4 @@ export 'src/dao/user_dao.dart';
 
 /// multi platform connection
 export 'src/connect/connection.dart';
+export 'src/entries/entries.dart';

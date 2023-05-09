@@ -2,9 +2,6 @@ part of 'catalog_users_bloc.dart';
 
 abstract class CatalogUsersEvent extends Equatable {
   const CatalogUsersEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class LoadCatalogUsersRequest extends CatalogUsersEvent {
@@ -14,4 +11,19 @@ class LoadCatalogUsersRequest extends CatalogUsersEvent {
 
   @override
   List<Object> get props => [retry];
+}
+
+class LoadLocalCatalogUsersRequest extends CatalogUsersEvent {
+  const LoadLocalCatalogUsersRequest();
+
+  @override
+  List<Object> get props => [];
+}
+
+class DeleteLocalUserRequest extends CatalogUsersEvent {
+  const DeleteLocalUserRequest(this.userId);
+  final int userId;
+
+  @override
+  List<Object> get props => [userId];
 }

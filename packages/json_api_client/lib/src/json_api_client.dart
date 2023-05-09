@@ -10,14 +10,14 @@ abstract class JsonApiClient {
   factory JsonApiClient({Dio? dio, String? baseUrl}) {
     final iDio = dio ?? Dio();
     final iBaseUrl = baseUrl ?? Endpoints.baseUrl;
-    return _JsonApiClient(iDio,baseUrl: iBaseUrl);
+    return _JsonApiClient(iDio, baseUrl: iBaseUrl);
   }
 
   @GET(Endpoints.users)
   Future<String> getUsers();
 
   @GET(Endpoints.users + '/{id}')
-  Future<String> getUser(@Path() String id);
+  Future<String> getUser(@Path() int id);
 
   @GET(Endpoints.posts)
   Future<String> getPosts();

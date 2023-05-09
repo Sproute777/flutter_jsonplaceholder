@@ -3,11 +3,17 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 
+import '../app/bloc/app_bloc.dart';
 import 'routes/routes.dart';
 
 class AppGoRouter extends GoRouter {
-  AppGoRouter()
-      : super(
+  // final AppBloc appBloc;
+  AppGoRouter(
+      // AppBloc _appBloc
+      )
+      :
+        // _appBlococ = appBloc,
+        super(
           routes: $appRoutes,
           initialLocation: const SplashRoute().location,
           errorBuilder: const Page404Route().build,
