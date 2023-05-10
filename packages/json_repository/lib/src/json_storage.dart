@@ -15,23 +15,23 @@ class JsonStorage {
         .where((u) => u.company != null)
         .map((user) => user.company!.toCompanyCompanion(user.id))
         .toList();
-    return _databaseClient.usersDao
+    return _databaseClient.userDao
         .saveUsers(userCompanion, addressCompanion, companyCompanion);
   }
 
   Future<List<UserEntry>> fetchUserEntries() {
-    return _databaseClient.usersDao.fetchUsers();
+    return _databaseClient.userDao.fetchUsers();
   }
 
   Future<List<AddressEntry>> fetchAddressEntries() {
-    return _databaseClient.usersDao.fetchAddresses();
+    return _databaseClient.userDao.fetchAddresses();
   }
 
   Future<List<UserFullEntry>> fetchUserFullEntries() {
-    return _databaseClient.usersDao.fetchUserFullEntries();
+    return _databaseClient.userDao.fetchUserFullEntries();
   }
 
   Future<void> deleteUser(int userId) {
-    return _databaseClient.usersDao.deleteUser(userId);
+    return _databaseClient.userDao.deleteUser(userId);
   }
 }

@@ -7,16 +7,18 @@ import '../tables/tables.dart';
 part 'user_dao.g.dart';
 
 @DriftAccessor(tables: [User, Address, Company])
-class UsersDao extends DatabaseAccessor<DatabaseClient> with _$UsersDaoMixin {
+class UserDao extends DatabaseAccessor<DatabaseClient> with _$UserDaoMixin {
   final DatabaseClient database;
 
-  UsersDao(this.database) : super(database);
+  UserDao(this.database) : super(database);
 
   // -------------------------------------------------------------------------//
   Future<void> clearUsers() async {
-    await delete(user).go();
-    await delete(address).go();
-    await delete(company).go();
+    return transaction(() async {
+      await delete(user).go();
+      await delete(address).go();
+      await delete(company).go();
+    });
   }
 
   Future<void> saveUser(UserCompanion userCompanion) async {

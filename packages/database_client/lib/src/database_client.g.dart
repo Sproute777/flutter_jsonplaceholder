@@ -12,7 +12,11 @@ class $UserTable extends User with TableInfo<$UserTable, UserEntry> {
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _usernameMeta =
       const VerificationMeta('username');
   @override
@@ -1207,45 +1211,46 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   }
 }
 
-class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
+class $AlbumTable extends Album with TableInfo<$AlbumTable, AlbumEntry> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $AlbumsTable(this.attachedDatabase, [this._alias]);
+  $AlbumTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
-  @override
-  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
-      'user_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
       'title', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userMeta = const VerificationMeta('user');
   @override
-  List<GeneratedColumn> get $columns => [id, userId, title];
+  late final GeneratedColumn<int> user = GeneratedColumn<int>(
+      'user', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES user (id)'));
   @override
-  String get aliasedName => _alias ?? 'albums';
+  List<GeneratedColumn> get $columns => [id, title, user];
   @override
-  String get actualTableName => 'albums';
+  String get aliasedName => _alias ?? 'album';
   @override
-  VerificationContext validateIntegrity(Insertable<Album> instance,
+  String get actualTableName => 'album';
+  @override
+  VerificationContext validateIntegrity(Insertable<AlbumEntry> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('user_id')) {
-      context.handle(_userIdMeta,
-          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
-    } else if (isInserting) {
-      context.missing(_userIdMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -1253,59 +1258,65 @@ class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
+    if (data.containsKey('user')) {
+      context.handle(
+          _userMeta, user.isAcceptableOrUnknown(data['user']!, _userMeta));
+    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Album map(Map<String, dynamic> data, {String? tablePrefix}) {
+  AlbumEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Album(
+    return AlbumEntry(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      userId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
       title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      user: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user']),
     );
   }
 
   @override
-  $AlbumsTable createAlias(String alias) {
-    return $AlbumsTable(attachedDatabase, alias);
+  $AlbumTable createAlias(String alias) {
+    return $AlbumTable(attachedDatabase, alias);
   }
 }
 
-class Album extends DataClass implements Insertable<Album> {
+class AlbumEntry extends DataClass implements Insertable<AlbumEntry> {
   final int id;
-  final int userId;
   final String title;
-  const Album({required this.id, required this.userId, required this.title});
+  final int? user;
+  const AlbumEntry({required this.id, required this.title, this.user});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['user_id'] = Variable<int>(userId);
     map['title'] = Variable<String>(title);
+    if (!nullToAbsent || user != null) {
+      map['user'] = Variable<int>(user);
+    }
     return map;
   }
 
-  AlbumsCompanion toCompanion(bool nullToAbsent) {
-    return AlbumsCompanion(
+  AlbumCompanion toCompanion(bool nullToAbsent) {
+    return AlbumCompanion(
       id: Value(id),
-      userId: Value(userId),
       title: Value(title),
+      user: user == null && nullToAbsent ? const Value.absent() : Value(user),
     );
   }
 
-  factory Album.fromJson(Map<String, dynamic> json,
+  factory AlbumEntry.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Album(
+    return AlbumEntry(
       id: serializer.fromJson<int>(json['id']),
-      userId: serializer.fromJson<int>(json['userId']),
       title: serializer.fromJson<String>(json['title']),
+      user: serializer.fromJson<int?>(json['user']),
     );
   }
   @override
@@ -1313,70 +1324,71 @@ class Album extends DataClass implements Insertable<Album> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'userId': serializer.toJson<int>(userId),
       'title': serializer.toJson<String>(title),
+      'user': serializer.toJson<int?>(user),
     };
   }
 
-  Album copyWith({int? id, int? userId, String? title}) => Album(
+  AlbumEntry copyWith(
+          {int? id, String? title, Value<int?> user = const Value.absent()}) =>
+      AlbumEntry(
         id: id ?? this.id,
-        userId: userId ?? this.userId,
         title: title ?? this.title,
+        user: user.present ? user.value : this.user,
       );
   @override
   String toString() {
-    return (StringBuffer('Album(')
+    return (StringBuffer('AlbumEntry(')
           ..write('id: $id, ')
-          ..write('userId: $userId, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('user: $user')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, userId, title);
+  int get hashCode => Object.hash(id, title, user);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Album &&
+      (other is AlbumEntry &&
           other.id == this.id &&
-          other.userId == this.userId &&
-          other.title == this.title);
+          other.title == this.title &&
+          other.user == this.user);
 }
 
-class AlbumsCompanion extends UpdateCompanion<Album> {
+class AlbumCompanion extends UpdateCompanion<AlbumEntry> {
   final Value<int> id;
-  final Value<int> userId;
   final Value<String> title;
-  const AlbumsCompanion({
+  final Value<int?> user;
+  const AlbumCompanion({
     this.id = const Value.absent(),
-    this.userId = const Value.absent(),
     this.title = const Value.absent(),
+    this.user = const Value.absent(),
   });
-  AlbumsCompanion.insert({
+  AlbumCompanion.insert({
     this.id = const Value.absent(),
-    required int userId,
     required String title,
-  })  : userId = Value(userId),
-        title = Value(title);
-  static Insertable<Album> custom({
+    this.user = const Value.absent(),
+  }) : title = Value(title);
+  static Insertable<AlbumEntry> custom({
     Expression<int>? id,
-    Expression<int>? userId,
     Expression<String>? title,
+    Expression<int>? user,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (userId != null) 'user_id': userId,
       if (title != null) 'title': title,
+      if (user != null) 'user': user,
     });
   }
 
-  AlbumsCompanion copyWith(
-      {Value<int>? id, Value<int>? userId, Value<String>? title}) {
-    return AlbumsCompanion(
+  AlbumCompanion copyWith(
+      {Value<int>? id, Value<String>? title, Value<int?>? user}) {
+    return AlbumCompanion(
       id: id ?? this.id,
-      userId: userId ?? this.userId,
       title: title ?? this.title,
+      user: user ?? this.user,
     );
   }
 
@@ -1386,21 +1398,21 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (userId.present) {
-      map['user_id'] = Variable<int>(userId.value);
-    }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
+    }
+    if (user.present) {
+      map['user'] = Variable<int>(user.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('AlbumsCompanion(')
+    return (StringBuffer('AlbumCompanion(')
           ..write('id: $id, ')
-          ..write('userId: $userId, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('user: $user')
           ..write(')'))
         .toString();
   }
@@ -1644,22 +1656,20 @@ class PostsCompanion extends UpdateCompanion<Post> {
   }
 }
 
-class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
+class $PhotoTable extends Photo with TableInfo<$PhotoTable, PhotoEntry> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $PhotosTable(this.attachedDatabase, [this._alias]);
+  $PhotoTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _albumIdMeta =
-      const VerificationMeta('albumId');
-  @override
-  late final GeneratedColumn<int> albumId = GeneratedColumn<int>(
-      'album_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
@@ -1676,25 +1686,34 @@ class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
   late final GeneratedColumn<String> thumbnailUrl = GeneratedColumn<String>(
       'thumbnail_url', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _cachedImageMeta =
+      const VerificationMeta('cachedImage');
   @override
-  List<GeneratedColumn> get $columns => [id, albumId, title, url, thumbnailUrl];
+  late final GeneratedColumn<Uint8List> cachedImage =
+      GeneratedColumn<Uint8List>('cached_image', aliasedName, true,
+          type: DriftSqlType.blob, requiredDuringInsert: false);
+  static const VerificationMeta _albumMeta = const VerificationMeta('album');
   @override
-  String get aliasedName => _alias ?? 'photos';
+  late final GeneratedColumn<int> album = GeneratedColumn<int>(
+      'album', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES album (id)'));
   @override
-  String get actualTableName => 'photos';
+  List<GeneratedColumn> get $columns =>
+      [id, title, url, thumbnailUrl, cachedImage, album];
   @override
-  VerificationContext validateIntegrity(Insertable<Photo> instance,
+  String get aliasedName => _alias ?? 'photo';
+  @override
+  String get actualTableName => 'photo';
+  @override
+  VerificationContext validateIntegrity(Insertable<PhotoEntry> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('album_id')) {
-      context.handle(_albumIdMeta,
-          albumId.isAcceptableOrUnknown(data['album_id']!, _albumIdMeta));
-    } else if (isInserting) {
-      context.missing(_albumIdMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -1714,79 +1733,103 @@ class $PhotosTable extends Photos with TableInfo<$PhotosTable, Photo> {
     } else if (isInserting) {
       context.missing(_thumbnailUrlMeta);
     }
+    if (data.containsKey('cached_image')) {
+      context.handle(
+          _cachedImageMeta,
+          cachedImage.isAcceptableOrUnknown(
+              data['cached_image']!, _cachedImageMeta));
+    }
+    if (data.containsKey('album')) {
+      context.handle(
+          _albumMeta, album.isAcceptableOrUnknown(data['album']!, _albumMeta));
+    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Photo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  PhotoEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Photo(
+    return PhotoEntry(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      albumId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}album_id'])!,
       title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title']),
       url: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}url'])!,
       thumbnailUrl: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}thumbnail_url'])!,
+      cachedImage: attachedDatabase.typeMapping
+          .read(DriftSqlType.blob, data['${effectivePrefix}cached_image']),
+      album: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}album']),
     );
   }
 
   @override
-  $PhotosTable createAlias(String alias) {
-    return $PhotosTable(attachedDatabase, alias);
+  $PhotoTable createAlias(String alias) {
+    return $PhotoTable(attachedDatabase, alias);
   }
 }
 
-class Photo extends DataClass implements Insertable<Photo> {
+class PhotoEntry extends DataClass implements Insertable<PhotoEntry> {
   final int id;
-  final int albumId;
   final String? title;
   final String url;
   final String thumbnailUrl;
-  const Photo(
+  final Uint8List? cachedImage;
+  final int? album;
+  const PhotoEntry(
       {required this.id,
-      required this.albumId,
       this.title,
       required this.url,
-      required this.thumbnailUrl});
+      required this.thumbnailUrl,
+      this.cachedImage,
+      this.album});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['album_id'] = Variable<int>(albumId);
     if (!nullToAbsent || title != null) {
       map['title'] = Variable<String>(title);
     }
     map['url'] = Variable<String>(url);
     map['thumbnail_url'] = Variable<String>(thumbnailUrl);
+    if (!nullToAbsent || cachedImage != null) {
+      map['cached_image'] = Variable<Uint8List>(cachedImage);
+    }
+    if (!nullToAbsent || album != null) {
+      map['album'] = Variable<int>(album);
+    }
     return map;
   }
 
-  PhotosCompanion toCompanion(bool nullToAbsent) {
-    return PhotosCompanion(
+  PhotoCompanion toCompanion(bool nullToAbsent) {
+    return PhotoCompanion(
       id: Value(id),
-      albumId: Value(albumId),
       title:
           title == null && nullToAbsent ? const Value.absent() : Value(title),
       url: Value(url),
       thumbnailUrl: Value(thumbnailUrl),
+      cachedImage: cachedImage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cachedImage),
+      album:
+          album == null && nullToAbsent ? const Value.absent() : Value(album),
     );
   }
 
-  factory Photo.fromJson(Map<String, dynamic> json,
+  factory PhotoEntry.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Photo(
+    return PhotoEntry(
       id: serializer.fromJson<int>(json['id']),
-      albumId: serializer.fromJson<int>(json['albumId']),
       title: serializer.fromJson<String?>(json['title']),
       url: serializer.fromJson<String>(json['url']),
       thumbnailUrl: serializer.fromJson<String>(json['thumbnailUrl']),
+      cachedImage: serializer.fromJson<Uint8List?>(json['cachedImage']),
+      album: serializer.fromJson<int?>(json['album']),
     );
   }
   @override
@@ -1794,101 +1837,113 @@ class Photo extends DataClass implements Insertable<Photo> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'albumId': serializer.toJson<int>(albumId),
       'title': serializer.toJson<String?>(title),
       'url': serializer.toJson<String>(url),
       'thumbnailUrl': serializer.toJson<String>(thumbnailUrl),
+      'cachedImage': serializer.toJson<Uint8List?>(cachedImage),
+      'album': serializer.toJson<int?>(album),
     };
   }
 
-  Photo copyWith(
+  PhotoEntry copyWith(
           {int? id,
-          int? albumId,
           Value<String?> title = const Value.absent(),
           String? url,
-          String? thumbnailUrl}) =>
-      Photo(
+          String? thumbnailUrl,
+          Value<Uint8List?> cachedImage = const Value.absent(),
+          Value<int?> album = const Value.absent()}) =>
+      PhotoEntry(
         id: id ?? this.id,
-        albumId: albumId ?? this.albumId,
         title: title.present ? title.value : this.title,
         url: url ?? this.url,
         thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+        cachedImage: cachedImage.present ? cachedImage.value : this.cachedImage,
+        album: album.present ? album.value : this.album,
       );
   @override
   String toString() {
-    return (StringBuffer('Photo(')
+    return (StringBuffer('PhotoEntry(')
           ..write('id: $id, ')
-          ..write('albumId: $albumId, ')
           ..write('title: $title, ')
           ..write('url: $url, ')
-          ..write('thumbnailUrl: $thumbnailUrl')
+          ..write('thumbnailUrl: $thumbnailUrl, ')
+          ..write('cachedImage: $cachedImage, ')
+          ..write('album: $album')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, albumId, title, url, thumbnailUrl);
+  int get hashCode => Object.hash(id, title, url, thumbnailUrl,
+      $driftBlobEquality.hash(cachedImage), album);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Photo &&
+      (other is PhotoEntry &&
           other.id == this.id &&
-          other.albumId == this.albumId &&
           other.title == this.title &&
           other.url == this.url &&
-          other.thumbnailUrl == this.thumbnailUrl);
+          other.thumbnailUrl == this.thumbnailUrl &&
+          $driftBlobEquality.equals(other.cachedImage, this.cachedImage) &&
+          other.album == this.album);
 }
 
-class PhotosCompanion extends UpdateCompanion<Photo> {
+class PhotoCompanion extends UpdateCompanion<PhotoEntry> {
   final Value<int> id;
-  final Value<int> albumId;
   final Value<String?> title;
   final Value<String> url;
   final Value<String> thumbnailUrl;
-  const PhotosCompanion({
+  final Value<Uint8List?> cachedImage;
+  final Value<int?> album;
+  const PhotoCompanion({
     this.id = const Value.absent(),
-    this.albumId = const Value.absent(),
     this.title = const Value.absent(),
     this.url = const Value.absent(),
     this.thumbnailUrl = const Value.absent(),
+    this.cachedImage = const Value.absent(),
+    this.album = const Value.absent(),
   });
-  PhotosCompanion.insert({
+  PhotoCompanion.insert({
     this.id = const Value.absent(),
-    required int albumId,
     this.title = const Value.absent(),
     required String url,
     required String thumbnailUrl,
-  })  : albumId = Value(albumId),
-        url = Value(url),
+    this.cachedImage = const Value.absent(),
+    this.album = const Value.absent(),
+  })  : url = Value(url),
         thumbnailUrl = Value(thumbnailUrl);
-  static Insertable<Photo> custom({
+  static Insertable<PhotoEntry> custom({
     Expression<int>? id,
-    Expression<int>? albumId,
     Expression<String>? title,
     Expression<String>? url,
     Expression<String>? thumbnailUrl,
+    Expression<Uint8List>? cachedImage,
+    Expression<int>? album,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (albumId != null) 'album_id': albumId,
       if (title != null) 'title': title,
       if (url != null) 'url': url,
       if (thumbnailUrl != null) 'thumbnail_url': thumbnailUrl,
+      if (cachedImage != null) 'cached_image': cachedImage,
+      if (album != null) 'album': album,
     });
   }
 
-  PhotosCompanion copyWith(
+  PhotoCompanion copyWith(
       {Value<int>? id,
-      Value<int>? albumId,
       Value<String?>? title,
       Value<String>? url,
-      Value<String>? thumbnailUrl}) {
-    return PhotosCompanion(
+      Value<String>? thumbnailUrl,
+      Value<Uint8List?>? cachedImage,
+      Value<int?>? album}) {
+    return PhotoCompanion(
       id: id ?? this.id,
-      albumId: albumId ?? this.albumId,
       title: title ?? this.title,
       url: url ?? this.url,
       thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      cachedImage: cachedImage ?? this.cachedImage,
+      album: album ?? this.album,
     );
   }
 
@@ -1897,9 +1952,6 @@ class PhotosCompanion extends UpdateCompanion<Photo> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (albumId.present) {
-      map['album_id'] = Variable<int>(albumId.value);
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
@@ -1910,17 +1962,24 @@ class PhotosCompanion extends UpdateCompanion<Photo> {
     if (thumbnailUrl.present) {
       map['thumbnail_url'] = Variable<String>(thumbnailUrl.value);
     }
+    if (cachedImage.present) {
+      map['cached_image'] = Variable<Uint8List>(cachedImage.value);
+    }
+    if (album.present) {
+      map['album'] = Variable<int>(album.value);
+    }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('PhotosCompanion(')
+    return (StringBuffer('PhotoCompanion(')
           ..write('id: $id, ')
-          ..write('albumId: $albumId, ')
           ..write('title: $title, ')
           ..write('url: $url, ')
-          ..write('thumbnailUrl: $thumbnailUrl')
+          ..write('thumbnailUrl: $thumbnailUrl, ')
+          ..write('cachedImage: $cachedImage, ')
+          ..write('album: $album')
           ..write(')'))
         .toString();
   }
@@ -2206,16 +2265,17 @@ abstract class _$DatabaseClient extends GeneratedDatabase {
   late final $AddressTable address = $AddressTable(this);
   late final $CompanyTable company = $CompanyTable(this);
   late final $TodosTable todos = $TodosTable(this);
-  late final $AlbumsTable albums = $AlbumsTable(this);
+  late final $AlbumTable album = $AlbumTable(this);
   late final $PostsTable posts = $PostsTable(this);
-  late final $PhotosTable photos = $PhotosTable(this);
+  late final $PhotoTable photo = $PhotoTable(this);
   late final $CommentsTable comments = $CommentsTable(this);
-  late final UsersDao usersDao = UsersDao(this as DatabaseClient);
+  late final UserDao userDao = UserDao(this as DatabaseClient);
+  late final AlbumDao albumDao = AlbumDao(this as DatabaseClient);
   late final TodosDao todosDao = TodosDao(this as DatabaseClient);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [user, address, company, todos, albums, posts, photos, comments];
+      [user, address, company, todos, album, posts, photo, comments];
 }

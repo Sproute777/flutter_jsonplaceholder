@@ -7,8 +7,8 @@ import 'connect/connection.dart' as impl;
 part 'database_client.g.dart';
 
 @DriftDatabase(
-  tables: [User, Address, Company, Todos, Albums, Posts, Photos, Comments],
-  daos: const [UsersDao, TodosDao],
+  tables: [User, Address, Company, Todos, Album, Posts, Photo, Comments],
+  daos: const [UserDao, AlbumDao, TodosDao],
   // include: {'query.drift'}
   // queries: {
   //   '_resetCategory':
@@ -28,8 +28,8 @@ class DatabaseClient extends _$DatabaseClient {
         await m.drop(user);
         await m.drop(address);
         await m.drop(todos);
-        await m.drop(photos);
-        await m.drop(albums);
+        await m.drop(photo);
+        await m.drop(album);
         await m.drop(comments);
         await m.drop(posts);
         await m.drop(company);

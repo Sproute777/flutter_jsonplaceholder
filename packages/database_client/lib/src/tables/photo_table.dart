@@ -1,13 +1,15 @@
 import 'package:drift/drift.dart';
 
-@DataClassName('Photo')
-class Photos extends Table {
-  IntColumn get id => integer()();
-  IntColumn get albumId => integer()();
+import '../../database_client.dart';
+import 'album_table.dart';
+
+@DataClassName('PhotoEntry')
+class Photo extends Table {
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text().nullable()();
   TextColumn get url => text()();
   TextColumn get thumbnailUrl => text()();
+  BlobColumn get cachedImage => blob().nullable()();
 
-  @override
-  Set<Column> get primaryKey => {id};
+  IntColumn get album => integer().nullable().references(Album, #id)();
 }
