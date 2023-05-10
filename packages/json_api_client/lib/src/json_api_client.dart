@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:json_api_client/src/models/models.dart';
 import 'package:retrofit/http.dart';
 
 import 'endpoints.dart';
@@ -29,7 +30,7 @@ abstract class JsonApiClient {
   Future<String> getAlbums();
 
   @GET(Endpoints.photos)
-  Future<String> getPhotos();
+  Future<List<PhotoDto>> getPhotos(@Queries() PhotoRequest request);
 
   @GET(Endpoints.todos)
   Future<String> getTodos();

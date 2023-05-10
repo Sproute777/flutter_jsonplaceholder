@@ -4,13 +4,14 @@ import 'dart:convert';
 import 'package:database_client/database_client.dart';
 import 'package:json_api_client/json_api_client.dart';
 
-import '../models/user.dart';
+import 'models/models.dart';
 
 part 'json_storage.dart';
 
 class JsonRepository {
   final JsonApiClient _apiClient;
   final JsonStorage _jsonStorage;
+
   JsonRepository(JsonApiClient apiClient, JsonStorage jsonStorage)
       : _apiClient = apiClient,
         _jsonStorage = jsonStorage;
@@ -32,6 +33,15 @@ class JsonRepository {
     return usersFullEntries
         .map((u) => User.fromEntry(u.userEntry, u.addressEntry, u.companyEntry))
         .toList();
+  }
+
+  Future<List<Photo>> fetchPhotos({
+    int startIndex = 0,
+    int? limit,
+  }) async {
+    final dto = await _apiClient
+        .getPhotos(PhotoRequest(startIndex: startIndex, limit: limit));
+    return dto.map((d) => Photo.fromDto(d)).toList();
   }
 
   Future<void> deleteLocalUser(int userId) async {

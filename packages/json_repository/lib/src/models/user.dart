@@ -2,7 +2,7 @@ import 'package:database_client/database_client.dart';
 import 'package:drift/drift.dart' hide JsonKey;
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:json_repository/models/address.dart';
+import 'package:json_repository/src/models/address.dart';
 
 import 'company.dart';
 

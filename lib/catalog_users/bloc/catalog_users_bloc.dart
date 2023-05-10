@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_bloc_ui/json_bloc_ui.dart';
 import 'package:json_repository/json_repository.dart';
-import 'package:json_repository/models/user.dart';
 
 part 'catalog_users_event.dart';
 

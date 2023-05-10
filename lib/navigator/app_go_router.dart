@@ -15,7 +15,7 @@ class AppGoRouter extends GoRouter {
         // _appBlococ = appBloc,
         super(
           routes: $appRoutes,
-          initialLocation: const SplashRoute().location,
+          initialLocation: const MenuRoute().location,
           errorBuilder: const Page404Route().build,
           redirect: (context, goState) {
             debugPrint(' ${goState.location} ${goState.pageKey}');

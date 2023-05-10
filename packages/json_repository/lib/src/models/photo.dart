@@ -1,11 +1,8 @@
 import 'package:database_client/database_client.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:drift/drift.dart' hide JsonKey;
 import 'package:equatable/equatable.dart';
+import 'package:json_api_client/json_api_client.dart';
 
-part 'photo.g.dart';
-
-@JsonSerializable()
 class Photo extends Equatable {
   final int id;
   final int albumId;
@@ -21,7 +18,14 @@ class Photo extends Equatable {
     required this.thumbnailUrl,
   });
 
-  factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
+  factory Photo.fromDto(PhotoDto dto) {
+    return Photo(
+        id: dto.id,
+        albumId: dto.albumId,
+        title: dto.title,
+        url: dto.url,
+        thumbnailUrl: dto.thumbnailUrl);
+  }
 
   /// using in [drift] , save class to local storage
   PhotoCompanion toPhotoCompanion(int albumId) => PhotoCompanion(
@@ -48,11 +52,3 @@ class Photo extends Equatable {
         title,
       ];
 }
-
-// {
-// "albumId": 1,
-// "id": 1,
-// "title": "accusamus beatae ad facilis cum similique qui sunt",
-// "url": "https://via.placeholder.com/600/92c952",
-// "thumbnailUrl": "https://via.placeholder.com/150/92c952"
-// },
